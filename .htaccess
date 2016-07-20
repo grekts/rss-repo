@@ -1,0 +1,22 @@
+AddDefaultCharset utf-8
+
+#Запрещаем CGI, SSI и закрываем показ списка файлов
+Options All -ExecCGI -Indexes -Includes
+
+<IfModule mod_rewrite.c>
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^.*$ $0.php [L,QSA]
+RewriteCond %{THE_REQUEST} ([^\s]*)\.php(\?[^\s]*)?
+RewriteRule (.*) %1 [R=301,L]
+RewriteCond %{HTTP_HOST} ^www.yourdomain.ru
+RewriteRule ^(.*)$ http://yourdomain.ru/$1 [R=301,L]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} ^(.+)/$
+RewriteRule ^(.+)/$ /$1 [R=301,L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule .* index.php [L]
+</IfModule>

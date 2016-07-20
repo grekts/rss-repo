@@ -1,0 +1,161 @@
+*{
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+  font-size: 0px;
+  font-family: Arial, Verdana sans-serif;
+}
+
+.container{
+    margin: 0px auto;
+    width: 1000px;
+}
+
+/*Main menu*/
+
+nav{
+    float: left;
+    margin: 10px 0px 0px 120px;
+}
+
+.ulMainMenu{
+    list-style-type: none;
+    padding: 0px;
+}
+
+.liMainMenu{
+    display: inline;
+    margin: 0px 30px 0px 0px;
+}
+
+.aMainMenu{
+    text-decoration: none;
+    color: #08c;
+    font-size: 18px;
+}
+
+/*html header*/
+
+header{
+    height: 45px;
+    margin: 10px 0px 0px 0px;
+}
+
+/*Logo*/
+
+.aSiteLogo{
+    text-decoration: none;
+    float: left;
+    color: #999;
+    font-weight: bold;
+    font-size: 28px;
+    margin: 5px 0px 0px 0px;
+}
+
+/*Footer*/
+
+footer{
+  margin: 0px 0px 20px 0px;
+  height: 40px;
+}
+
+/*Copyright in footer*/
+
+.pCopyrightData{
+    float: left;
+    margin: 15px 0px 0px 0px;
+    color: #999;
+    font-size: 12px;
+}
+
+/*body part index page*/
+
+.divBlockSendTape{
+  height: 50px;
+}
+
+.inputSendNewTape{
+ margin: 0px 0px 0px 600px;
+ border: 1px solid #D8D8D8;
+ width: 200px;
+ height: 25px;
+ font-size: 14px;
+ padding: 0px 0px 0px 5px;
+ color: #D8D8D8;
+}
+
+.buttonSendNewTape{
+  margin: 0px 0px 0px 20px;
+  border: 1px solid #D8D8D8;
+  width: 100px;
+  height: 27px;
+  font-size: 14px;
+}
+
+.buttonSendNewTape:hover{
+  cursor: pointer;
+}
+
+.divOneNews{
+  margin: 0px 0px 0px 10px;;
+  width: 950px;
+  border-bottom: 1px solid #D8D8D8;
+  display: none;
+}
+
+.divOneNews:hover{
+  cursor: pointer;
+}
+
+.divHeadPartOneNews{
+  margin: 0px 0px 0px 0px;
+  width: 100%;
+  border-bottom: 1px solid #D8D8D8;
+}
+
+.divHeadPartOneNews:hover{
+  cursor: pointer;
+  background-color: #ddeeff;
+}
+
+.pTitleOneNews{
+  margin: 10px 0px 10px 10px;
+  font-size: 14px;
+  width: 750px;
+  display: inline-block;
+}
+
+.pTimeOneNews{
+  margin: 12px 30px 0px 0px;
+  float: right;
+  font-size: 12px;
+  color: #999;
+  width: 100px;
+  display: inline;
+}
+
+.pDescriptionOneNews{
+  margin: 10px 0px 10px 0px;
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.aReadAllNewsText{
+  margin: 0px 0px 15px 0px;
+  font-size: 14px;
+  color: #08c;
+  display: inline-block;
+}
+
+.aReadAllNewsText:hover{
+  color: #90c7ff;
+}
+
+.aExternalUrl{
+  font-size: 14px;
+  color: #999;
+}
+
+.aExternalUrl:hover{
+  color: #D8D8D8;
+}
