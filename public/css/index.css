@@ -31,14 +31,18 @@ nav{
 .aMainMenu{
     text-decoration: none;
     color: #08c;
-    font-size: 18px;
+    font-size: 16px;
+}
+
+.aMainMenu:hover{
+  text-decoration: underline;
 }
 
 /*html header*/
 
 header{
     height: 45px;
-    margin: 10px 0px 0px 0px;
+    margin: 30px 0px 0px 0px;
 }
 
 /*Logo*/
@@ -68,7 +72,7 @@ footer{
     font-size: 12px;
 }
 
-/*body part index page*/
+/*Block send new tape to system*/
 
 .divBlockSendTape{
   height: 50px;
@@ -95,6 +99,8 @@ footer{
 .buttonSendNewTape:hover{
   cursor: pointer;
 }
+
+/*body part index page*/
 
 .divOneNews{
   margin: 0px 0px 0px 10px;;
@@ -158,4 +164,35 @@ footer{
 
 .aExternalUrl:hover{
   color: #D8D8D8;
+}
+
+/*Tape list page*/
+
+.divOneTape{
+  margin: 0px 0px 0px 0px;
+  width: 100%;
+  border-bottom: 1px solid #D8D8D8;
+}
+
+.divOneTape:hover{
+  cursor: pointer;
+}
+
+.pTapeUrl{
+  margin: 10px 0px 10px 10px;
+  font-size: 14px;
+  width: 750px;
+  display: inline-block;
+}
+
+.pDeleteTape{
+  float: right;
+  margin: 10px 20px 0px 0px;
+  font-size: 14px;
+  color: #999;
+}
+
+.pDeleteTape:hover{
+  color: #90c7ff;
+  text-decoration: underline;
 }

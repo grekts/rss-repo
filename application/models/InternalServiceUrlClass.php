@@ -20,7 +20,7 @@ class InternalServiceUrlClass
       }
       
       //array with all url wich exist in the service
-      $urlVariants = array('/', '', 'get-news', 'new-tape', 'read', 'tape-list');
+      $urlVariants = array('/', '', 'get-news', 'new-tape', 'read', 'tape-list', 'delete-tape');
       
       //count number letter in url
       $coutLetterInUrl = strlen($this->requestUrl);

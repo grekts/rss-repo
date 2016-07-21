@@ -63,5 +63,19 @@ class RssTapeClass
     
     unset($tapeUrlForSend, $dbConnect, $flagTapeExistInDB, $query, $prepareQuery);
   }
+  
+  function deleteTapeFromDb($tapeId, $dbConnect)
+  {
+    $tapeId = (int)$tapeId;
+    try {
+      //delete tape from DB
+      $query = 'DELETE FROM rss_url_list
+      WHERE rss_url_list_id = ?';
+      $prepareQuery = $dbConnect->prepare($query);
+      $prepareQuery->execute(array($tapeId));
+    } catch(PDOException $e) {
+      $dbConnect->rollBack();
+      trigger_error(ERROR_SYSTEM_ERROR.'|!|'.$_SESSION['initializer'], E_USER_ERROR);
+    }
+  }
 }
-

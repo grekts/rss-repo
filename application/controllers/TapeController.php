@@ -56,3 +56,12 @@ if(isset($_POST['nameNewTape']) === true) {
   }
 }
 
+//if user want delete tape
+if(isset($_POST['idTapeForDelete']) === true) {
+  $dataFromClient = new dataFromClientClassNamespace();
+  //check data which come from user
+  $dataFromClient->screeningDataFromClient($_POST['idTapeForDelete']);
+  
+  $rssTape = new rssTapeClassNamespace();
+  $rssTape->deleteTapeFromDb($dataFromClient->screeningDataFromClient, $dataBase->pdoObject);
+}

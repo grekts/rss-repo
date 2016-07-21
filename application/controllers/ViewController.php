@@ -13,6 +13,7 @@ use application\models\view\RobotsAccessClass as robotsAccessClassNamespace;
 use application\models\view\NewsClass as newsClassNamespace;
 use application\models\SessionClass as sessionClassNamespace;
 use application\models\DataBaseClass as dataBaseClassNamespace;
+use application\models\view\TapeClass as tapeClassnamespace;
 
 $sessionAnalysis = new sessionClassNamespace();
 $sessionAnalysis->startSession();
@@ -75,6 +76,9 @@ if($internalServiceUrlObject->numberRequestedUrl === 5) {
   $robotsAccess = new robotsAccessClassNamespace();
   //formation code for close pade for index
   $robotsAccess->formingCodeBanAccessRobotsOnPage($internalServiceUrlObject->numberRequestedUrl);
+  
+  $tape = new tapeClassnamespace();
+  $tape->getTapeList($dataBase->pdoObject);
   
   require_once(VIEW_PUTH.'HtmlHeadView.php');
   require_once(VIEW_PUTH.'BodyHeadView.php');

@@ -13,8 +13,9 @@ class RouterClass
       case 3: require_once(CONTROLLER_PUTH.'TapeController.php'); require_once(CONTROLLER_PUTH.'PublicationController.php'); break;
       case 4: require_once(CONTROLLER_PUTH.'PublicationController.php'); break;
       case 5: require_once(CONTROLLER_PUTH.'ViewController.php'); break;
+      case 6: require_once(CONTROLLER_PUTH.'TapeController.php'); break;
     }
-    
+
     unset($internalServiceUrlObject);
   }
 }
