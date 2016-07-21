@@ -69,7 +69,7 @@ class NewsClass extends \DOMDocument
         $this->newsLinkArray[] = htmlspecialchars($newsLinkObject->item(0)->nodeValue);
         $newsDateObject = $oneNewsCodeFromRss->getElementsByTagName('pubDate');
         $publicationDate = htmlspecialchars($newsDateObject->item(0)->nodeValue);
-        $explodeDate = explode(' ', $publicationDate);
+        $explodeDate = explode(' ', trim($publicationDate));
         $day = (int)$explodeDate[1];
         switch($explodeDate[2]) {
           case 'Jan': $month = 1; break;
@@ -85,7 +85,7 @@ class NewsClass extends \DOMDocument
           case 'Nov': $month = 11; break;
           case 'Dec': $month = 12; break;
         }
-        $year = $explodeDate[3];
+        $year = (int)$explodeDate[3];
         
         $explodeTime = explode(':', $explodeDate[4]);
         $hours = (int)$explodeTime[0];
