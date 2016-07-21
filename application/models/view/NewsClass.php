@@ -15,10 +15,9 @@ class NewsClass
   {
     try {
       $query = 'SELECT news.news_title, news.news_description, news.news_link, news.publication_date, news.news_id
-      FROM news
-      WHERE news.read = ?';
+      FROM news';
       $prepareQuery = $dbConnect->prepare($query);
-      $prepareQuery->execute(array(0));
+      $prepareQuery->execute(array());
       $dataFromDb = $prepareQuery->fetchAll(\PDO::FETCH_NUM);
     } catch(PDOException $e) {
       trigger_error(ERROR_SYSTEM_ERROR.'|!|'.$_SESSION['initializer'], E_USER_ERROR);

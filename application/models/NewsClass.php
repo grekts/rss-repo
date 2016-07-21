@@ -104,9 +104,9 @@ class NewsClass extends \DOMDocument
     if($numberNewsForSend !== 0){
       for ($i = 0; $i<$numberNewsForSend; $i++) {
         try {
-          $query = 'INSERT INTO news VALUES (?, ?, ?, ?, ?, ?, ?)';
+          $query = 'INSERT INTO news VALUES (?, ?, ?, ?, ?, ?)';
           $prepareQuery = $dbConnect->prepare($query);
-          $prepareQuery->execute(array(NULL, $idParsedTape, $this->newsTitleFromRssArray[$i], htmlspecialchars_decode($this->newsDescriptionArray[$i]), $this->newsLinkArray[$i], $this->newsPublicationDateArray[$i], 0));
+          $prepareQuery->execute(array(NULL, $idParsedTape, $this->newsTitleFromRssArray[$i], htmlspecialchars_decode($this->newsDescriptionArray[$i]), $this->newsLinkArray[$i], $this->newsPublicationDateArray[$i]));
         } catch(PDOException $e) {
           $dbConnect->rollBack();
           trigger_error(ERROR_SYSTEM_ERROR.'|!|'.$_SESSION['initializer'], E_USER_ERROR);
@@ -134,16 +134,17 @@ class NewsClass extends \DOMDocument
     unset($numberDescriptions, $explodeNewsText, $onePartNewsText);
   }
   
-  function changeFlagReadNews($newsId, $dbConnect) 
+  function deleteReadNews($newsId, $dbConnect) 
   {
     $newsId = (int)$newsId;
     try {
-      $query = 'UPDATE news 
-      SET news.read = ? 
-      WHERE news.news_id = ? LIMIT 1';
+      //delete tape from DB
+      $query = 'DELETE FROM news
+      WHERE news.news_id = ?';
       $prepareQuery = $dbConnect->prepare($query);
-      $prepareQuery->execute(array(1, $newsId));
+      $prepareQuery->execute(array($newsId));
     } catch(PDOException $e) {
+      $dbConnect->rollBack();
       trigger_error(ERROR_SYSTEM_ERROR.'|!|'.$_SESSION['initializer'], E_USER_ERROR);
     }
     

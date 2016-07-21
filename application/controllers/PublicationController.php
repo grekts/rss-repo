@@ -18,6 +18,7 @@ $dataBase = new dataBaseClassNamespace(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 //connect to database
 $dataBase->connectionWithDb();
 
+//if come commant not for change flag reeded news
 if(isset($_POST['idReadNews']) === false) {
   //set flag with use error handler for determine who start script (cron or user)
   $_SESSION['initializer'] = 'cron';
@@ -52,7 +53,7 @@ if(isset($_POST['idReadNews']) === false) {
   $dataFromClient->screeningDataFromClient($_POST['idReadNews']);
   
   $news = new newsClassNamespace();
-  $news->changeFlagReadNews($dataFromClient->screeningDataFromClient, $dataBase->pdoObject);
+  $news->deleteReadNews($dataFromClient->screeningDataFromClient, $dataBase->pdoObject);
 }
 
 
