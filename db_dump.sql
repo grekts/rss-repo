@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Июл 20 2016 г., 16:06
+-- Время создания: Июл 22 2016 г., 16:59
 -- Версия сервера: 5.5.44-0ubuntu0.14.04.1
 -- Версия PHP: 5.5.9-1ubuntu4.14
 
@@ -36,7 +36,23 @@ CREATE TABLE IF NOT EXISTS `news` (
   `read` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`news_id`),
   KEY `rss_url_list_id` (`rss_url_list_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=41 ;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `news_archive`
+--
+
+CREATE TABLE IF NOT EXISTS `news_archive` (
+  `news_archive_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `rss_url_list_id` bigint(20) unsigned NOT NULL,
+  `news_title` text NOT NULL,
+  `news_description` text NOT NULL,
+  `news_link` text NOT NULL,
+  `publication_date` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`news_archive_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
@@ -48,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `rss_url_list` (
   `rss_url_list_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `rss_url` text NOT NULL,
   PRIMARY KEY (`rss_url_list_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=16 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
