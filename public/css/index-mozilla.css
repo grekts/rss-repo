@@ -6,128 +6,116 @@
   font-family: Arial, Verdana sans-serif;
 }
 
+body {
+  background-color: #D8D8D8;
+}
+
 .container{
-    margin: 0px auto;
-    width: 1000px;
+  margin: 0px auto;
+  width: 1000px;
+}
+
+/*html header*/
+
+header{
+  height: 60px;
+  background-color: #eeeeee;
+}
+
+.divHeaderElements{
+  width: 1000px;
+  margin: 0px auto;
+}
+
+/*Logo*/
+
+.aSiteLogo{
+  display: inline-block;
+  vertical-align: top;
+  text-decoration: none;
+  color: #999;
+  font-weight: bold;
+  font-size: 28px;
+  margin: 15px 0px 0px 0px;
 }
 
 /*Main menu*/
 
 nav{
-    float: left;
-    margin: 10px 0px 0px 120px;
+  display: inline-block;
+  vertical-align: top;
+  margin: 23px 0px 0px 150px;
 }
 
 .ulMainMenu{
-    list-style-type: none;
-    padding: 0px;
+  list-style-type: none;
+  padding: 0px;
 }
 
 .liMainMenu{
-    display: inline;
-    margin: 0px 30px 0px 0px;
+  display: inline;
+  margin: 0px 30px 0px 0px;
 }
 
 .aMainMenu{
-    text-decoration: none;
-    color: #08c;
-    font-size: 16px;
+  text-decoration: none;
+  color: #08c;
+  font-size: 16px;
 }
 
 .aMainMenu:hover{
   text-decoration: underline;
 }
 
-/*html header*/
+/*Block send new tape to system*/
 
-header{
-    height: 45px;
-    margin: 30px 0px 0px 0px;
+.inputSendNewTape{
+  display: inline-block;
+  vertical-align: top;
+   margin: 15px 0px 0px 230px;
+   border: 1px solid #b1b1b1;
+   width: 200px;
+   height: 25px;
+   font-size: 14px;
+   padding: 0px 0px 0px 5px;
+   color: #b1b1b1;
+   background-color: #eeeeee;
 }
 
-/*Logo*/
-
-.aSiteLogo{
-    text-decoration: none;
-    float: left;
-    color: #999;
-    font-weight: bold;
-    font-size: 28px;
-    margin: 5px 0px 0px 0px;
+.buttonSendNewTape{
+  display: inline-block;
+  vertical-align: top;
+  margin: 15px 0px 0px 20px;
+  border: 1px solid #b1b1b1;
+  width: 100px;
+  height: 27px;
+  font-size: 14px;
+  background-color: #eeeeee;
+  color: #7b7b7b;
 }
 
-/*Footer*/
-
-footer{
-  margin: 0px 0px 20px 0px;
-  height: 40px;
-}
-
-/*Copyright in footer*/
-
-.pCopyrightData{
-    float: left;
-    margin: 15px 0px 0px 0px;
-    color: #999;
-    font-size: 12px;
+.buttonSendNewTape:hover{
+  cursor: pointer;
+  background-color: #e7e7e7;
 }
 
 /*H1 titile*/
 h1{
   font-size: 16px;
-  margin: 30px 0px 0px 0px;
-}
-
-/*Block send new tape to system*/
-
-.divBlockSendTape{
-  height: 50px;
-}
-
-.inputSendNewTape{
- margin: 0px 0px 0px 600px;
- border: 1px solid #D8D8D8;
- width: 200px;
- height: 25px;
- font-size: 14px;
- padding: 0px 0px 0px 5px;
- color: #D8D8D8;
-}
-
-.buttonSendNewTape{
-  margin: 0px 0px 0px 20px;
-  border: 1px solid #D8D8D8;
-  width: 100px;
-  height: 27px;
-  font-size: 14px;
-}
-
-.buttonSendNewTape:hover{
-  cursor: pointer;
+  margin: 30px 0px 20px 0px;
 }
 
 /*body part index page and archive*/
 
-.divOneNews{
-  margin: 0px 0px 0px 10px;;
-  width: 950px;
-  border-bottom: 1px solid #D8D8D8;
-  display: none;
-}
-
-.divOneNews:hover{
-  cursor: pointer;
-}
-
 .divHeadPartOneNews{
   margin: 0px 0px 0px 0px;
   width: 100%;
-  border-bottom: 1px solid #D8D8D8;
+  border-bottom: 1px solid #adadad;
 }
 
 .divHeadPartOneNews:hover{
   cursor: pointer;
-  background-color: #ddeeff;
+  background-color: #f1f1f1;
 }
 
 .pTitleOneNews{
@@ -144,6 +132,17 @@ h1{
   color: #999;
   width: 100px;
   display: inline;
+}
+
+.divOneNews{
+  margin: 0px 0px 0px 10px;;
+  width: 950px;
+  border-bottom: 1px solid #adadad;
+  display: none;
+}
+
+.divOneNews:hover{
+  cursor: pointer;
 }
 
 .pDescriptionOneNews{
@@ -169,7 +168,7 @@ h1{
 }
 
 .aExternalUrl:hover{
-  color: #D8D8D8;
+  color: #5a5a5a;
 }
 
 /*body part only index page*/
@@ -182,7 +181,7 @@ h1{
 }
 
 .pSendNewsToArchive:hover{
-  color: #D8D8D8;
+  color: #5a5a5a;
   text-decoration: underline;
 }
 
@@ -196,7 +195,7 @@ h1{
 }
 
 .pDeleteNewsFromArchive:hover{
-  color: #D8D8D8;
+  color: #5a5a5a;
   text-decoration: underline;
 }
 
@@ -205,11 +204,12 @@ h1{
 .divOneTape{
   margin: 0px 0px 0px 0px;
   width: 100%;
-  border-bottom: 1px solid #D8D8D8;
+  border-bottom: 1px solid #adadad;
 }
 
 .divOneTape:hover{
   cursor: pointer;
+  background-color: #f1f1f1;
 }
 
 .pTapeUrl{
@@ -231,3 +231,17 @@ h1{
   text-decoration: underline;
 }
 
+/*Footer*/
+
+footer{
+  height: 60px;
+}
+
+/*Copyright in footer*/
+
+.pCopyrightData{
+  float: left;
+  margin: 30px 0px 0px 0px;
+  color: #999;
+  font-size: 12px;
+}

@@ -2,8 +2,12 @@
 
 echo '
 <body>
-    <div class="container">
-        <header>
-            <a href="/" class="aSiteLogo" title="Главная страница">RSS</a>
+    <header>
+        <div class="divHeaderElements">
+        <a href="/" class="aSiteLogo" title="Главная страница">RSS</a>
             '.$mainMenu->maneMenuCode.'
-        </header>';
+        <input type="text" class="inputSendNewTape" id="inputSendNewTape" value="Ссылка на RSS ленту">
+        <button class="buttonSendNewTape">Добавить</bottun>
+        </div>
+    </header>
+    <div class="container">';
