@@ -11,7 +11,8 @@ class RobotsAccessClass
   {  
     if(($pageNumber == 0) 
     || ($pageNumber == 1)
-    || ($pageNumber == 5)) {
+    || ($pageNumber == 5)
+    || ($pageNumber == 8)) {
       $this->codeBanAccessRobotsOnPageCode = '<meta name="robots" content="noindex, follow" />';
     } else {
       $this->codeBanAccessRobotsOnPageCode = '';

@@ -51,9 +51,28 @@ if(isset($_POST['idReadNews']) === false) {
   $dataFromClient = new dataFromClientClassNamespace();
   //check data which come from user
   $dataFromClient->screeningDataFromClient($_POST['idReadNews']);
+  $screeningId = $dataFromClient->screeningDataFromClient;
   
   $news = new newsClassNamespace();
-  $news->deleteReadNews($dataFromClient->screeningDataFromClient, $dataBase->pdoObject);
+  //if come flag what need send news to archive
+  if(isset($_POST['sendToArchive']) === true) {
+    $dataFromClient->screeningDataFromClient($_POST['sendToArchive']);
+    $flagSendToArchive = $dataFromClient->screeningDataFromClient;
+    if($flagSendToArchive === '1'){
+      $news->sendNewsToArchive($screeningId, $dataBase->pdoObject);
+    }
+  }
+  
+  //if come flag what need delete news from archive
+  if(isset($_POST['deleteFromArchive']) === true) {
+    $dataFromClient->screeningDataFromClient($_POST['deleteFromArchive']);
+    $flagDeleteFromArchive = $dataFromClient->screeningDataFromClient;
+    if($flagDeleteFromArchive === '1'){
+      $news->deleteNewsFromArchive($screeningId, $dataBase->pdoObject);
+    }
+  }
+  
+  $news->setFlagReadNews($screeningId, $dataBase->pdoObject);
 }
 
 

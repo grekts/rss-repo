@@ -2,6 +2,7 @@
 
 echo '    
         <div id="main">
+            <h1>'.$h1Title->h1TitleTextData.'</h1>
             <div class="divBlockSendTape">
                 <input type="text" class="inputSendNewTape" id="inputSendNewTape" value="Ссылка на RSS ленту">
                 <button class="buttonSendNewTape">Добавить</bottun>

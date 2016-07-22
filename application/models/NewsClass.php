@@ -104,9 +104,9 @@ class NewsClass extends \DOMDocument
     if($numberNewsForSend !== 0){
       for ($i = 0; $i<$numberNewsForSend; $i++) {
         try {
-          $query = 'INSERT INTO news VALUES (?, ?, ?, ?, ?, ?)';
+          $query = 'INSERT INTO news VALUES (?, ?, ?, ?, ?, ?, ?)';
           $prepareQuery = $dbConnect->prepare($query);
-          $prepareQuery->execute(array(NULL, $idParsedTape, $this->newsTitleFromRssArray[$i], htmlspecialchars_decode($this->newsDescriptionArray[$i]), $this->newsLinkArray[$i], $this->newsPublicationDateArray[$i]));
+          $prepareQuery->execute(array(NULL, $idParsedTape, $this->newsTitleFromRssArray[$i], htmlspecialchars_decode($this->newsDescriptionArray[$i]), $this->newsLinkArray[$i], $this->newsPublicationDateArray[$i], 0));
         } catch(PDOException $e) {
           $dbConnect->rollBack();
           trigger_error(ERROR_SYSTEM_ERROR.'|!|'.$_SESSION['initializer'], E_USER_ERROR);
@@ -134,21 +134,62 @@ class NewsClass extends \DOMDocument
     unset($numberDescriptions, $explodeNewsText, $onePartNewsText);
   }
   
-  function deleteReadNews($newsId, $dbConnect) 
+  function setFlagReadNews($newsId, $dbConnect) 
   {
     $newsId = (int)$newsId;
     try {
-      //delete tape from DB
-      $query = 'DELETE FROM news
+      $query = 'UPDATE news 
+      SET news.read = ? 
+      WHERE news_id = ? LIMIT 1';
+      $prepareQuery = $dbConnect->prepare($query);
+      $prepareQuery->execute(array(1, $newsId));
+    } catch(PDOException $e) {
+      trigger_error(ERROR_SYSTEM_ERROR.'|!|'.$_SESSION['initializer'].'|!|'.'0', E_USER_ERROR);
+    }
+    
+    unset($newsId, $dbConnect, $query, $prepareQuery);
+  }
+  
+  function sendNewsToArchive($newsId, $dbConnect)
+  {
+    $newsId = (int)$newsId;
+    try {
+      $query = 'SELECT news.news_title, news.news_description, news.news_link, news.publication_date, news.rss_url_list_id
+      FROM news
       WHERE news.news_id = ?';
+      $prepareQuery = $dbConnect->prepare($query);
+      $prepareQuery->execute(array($newsId));
+      $dataFromDb = $prepareQuery->fetchAll(\PDO::FETCH_NUM);
+    } catch(PDOException $e) {
+      trigger_error(ERROR_SYSTEM_ERROR.'|!|'.$_SESSION['initializer'], E_USER_ERROR);
+    }
+    
+    $numberNews = count($dataFromDb);
+    if($numberNews !== 0) {
+      try {
+        $query = 'INSERT INTO news_archive VALUES (?, ?, ?, ?, ?, ?)';
+        $prepareQuery = $dbConnect->prepare($query);
+        $prepareQuery->execute(array(NULL, $dataFromDb[0][4], $dataFromDb[0][0], $dataFromDb[0][1], $dataFromDb[0][2], $dataFromDb[0][3]));
+      } catch(PDOException $e) {
+        $dbConnect->rollBack();
+        trigger_error(ERROR_SYSTEM_ERROR.'|!|'.$_SESSION['initializer'], E_USER_ERROR);
+      }
+    }
+  }
+  
+  function deleteNewsFromArchive($newsId, $dbConnect)
+  {
+    $newsId = (int)$newsId;
+    try {
+      //delete news from archive from DB
+      $query = 'DELETE FROM news_archive
+      WHERE news_archive.news_archive_id = ?';
       $prepareQuery = $dbConnect->prepare($query);
       $prepareQuery->execute(array($newsId));
     } catch(PDOException $e) {
       $dbConnect->rollBack();
       trigger_error(ERROR_SYSTEM_ERROR.'|!|'.$_SESSION['initializer'], E_USER_ERROR);
     }
-    
-    unset($newsId, $dbConnect, $query, $prepareQuery);
   }
   
 }

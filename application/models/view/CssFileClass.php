@@ -14,6 +14,7 @@ class CssFileClass
       case 0: 
       case 1:
       case 5:
+      case 8:
         if(strpos($userAgentData, 'Firefox') !== false){$this->nameCssFileTextData = 'index-mozilla.css';}
         elseif(strpos($userAgentData, 'YaBrowser') !== false){$this->nameCssFileTextData = 'index.css';}
         elseif(strpos($userAgentData, 'Edge') !== false){$this->nameCssFileTextData = 'index-mozilla.css';}

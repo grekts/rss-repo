@@ -4,6 +4,8 @@ $('.inputSendNewTape').blur(blurOutofInputWithNameNewRss);
 $('.divHeadPartOneNews').click(openNewsDescriptionOrNewsText);
 $('.divOneNews').click(openNewsDescriptionOrNewsText);
 $('.pDeleteTape').click(sendTapeNumberForDelete);
+$('.pDeleteNewsFromArchive').click(deleteNewsFromArchive);
+$('.pSendNewsToArchive').click(sendNewsToArchive);
 
 function sendNewRssTapeToDb()
 {
@@ -49,12 +51,11 @@ function openNewsDescriptionOrNewsText(){
   newsNumber = splitNewsId[1];
   newsForShowOrClose = $('#divOneNew-' + newsNumber);
   if(newsForShowOrClose.css('display') === 'none') {
+    $('.divOneNews').hide();
     newsForShowOrClose.show();
-    $('.pTitleOneNews').css('color', '#eaeaea');
-    $('.pTimeOneNews').css('color', '#eaeaea');
     $('.divHeadPartOneNews').css('border-bottom', '0px');
-    $('#pTitleOneNews-' + newsNumber).css('color', '#000000');
-    $('#pTitleOneNews-' + newsNumber).css('font-weight', 'bold');
+    $('#pTitleOneNews-' + newsNumber).css('color', '#cbcbcb');
+    $('#pTimeOneNews-' + newsNumber).css('color', '#cbcbcb');
     
     $.ajax({
       type: "POST",
@@ -71,10 +72,6 @@ function openNewsDescriptionOrNewsText(){
   } else {
     newsForShowOrClose.hide();
     $('.divHeadPartOneNews').css('border-bottom', '1px solid #D8D8D8');
-    $('.pTitleOneNews').css('color', '#000000');
-    $('.pTimeOneNews').css('color', '#999');
-    $('#pTitleOneNews-' + newsNumber).css('font-weight', 'normal');
-    $('#divHeadPartOneNews-' + newsNumber).hide();
   }
 }
 
@@ -96,6 +93,50 @@ function sendTapeNumberForDelete()
           alert(dataSplit[1]);
         } else {
           url = "tape-list";
+          $(location).attr('href',url);
+        }
+      }
+    });
+  }
+}
+
+function sendNewsToArchive()
+{
+  newsId = this.id;
+  splitNewsId = newsId.split('-');
+  newsNumber = splitNewsId[1];
+  $.ajax({
+    type: "POST",
+    url: "send-news-to-archive",
+    data: {idReadNews:newsNumber, sendToArchive:1},
+    dataType: "text",
+    success: function(data) {
+      dataSplit = data.split('|');
+      if(dataSplit[0] === 'error') {
+        alert(dataSplit[1]);
+      }
+    }
+  });
+}
+
+function deleteNewsFromArchive()
+{
+  newsId = this.id;
+  splitNewsId = newsId.split('-');
+  newsNumber = splitNewsId[1];
+  confirmResult = confirm('Новость будет удалена. Продолжить?');
+  if(confirmResult === true) {
+    $.ajax({
+      type: "POST",
+      url: "delete-news-from-archive",
+      data: {idReadNews:newsNumber, deleteFromArchive:1},
+      dataType: "text",
+      success: function(data) {
+        dataSplit = data.split('|');
+        if(dataSplit[0] === 'error') {
+          alert(dataSplit[1]);
+        } else {
+          url = "archive";
           $(location).attr('href',url);
         }
       }

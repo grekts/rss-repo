@@ -14,6 +14,7 @@ class TitleClass
         case 0: $this->titleTextData = 'Лента новостей'; break;
         case 1: $this->titleTextData = 'Лента новостей'; break;
         case 5: $this->titleTextData = 'RSS ленты'; break;
+        case 8: $this->titleTextData = 'Архив новостей'; break;
       }
     }
     

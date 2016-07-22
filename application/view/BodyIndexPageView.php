@@ -2,6 +2,7 @@
 
 echo '    
         <div id="main">
+            <h1>'.$h1Title->h1TitleTextData.'</h1>
             <div class="divBlockSendTape">
                 <input type="text" class="inputSendNewTape" id="inputSendNewTape" value="Ссылка на RSS ленту">
                 <button class="buttonSendNewTape">Добавить</bottun>
@@ -13,7 +14,7 @@ echo '
                       echo '<div class="divHeadPartOneNews" id="divHeadPartOneNews-'.$newsList->newsIdArray[$i].'">';
                       echo '<p class="pTitleOneNews" id="pTitleOneNews-'.$newsList->newsIdArray[$i].'">'.$newsList->newsTitleArray[$i].'</p>';
                       $date = date('d.m.Y H:i', $newsList->newsPublicationDateArray[$i]);
-                      echo '<p class="pTimeOneNews">'.$date.'</p>';
+                      echo '<p class="pTimeOneNews" id="pTimeOneNews-'.$newsList->newsIdArray[$i].'">'.$date.'</p>';
                       echo '</div>';
                       echo '<div class="divOneNews" id="divOneNew-'.$newsList->newsIdArray[$i].'">';
                       $explodeDescriptionString = explode('|!|', $newsList->newsDescriptionArray[$i]);
@@ -24,6 +25,7 @@ echo '
                         }
                       }
                       echo '<a href="'.$newsList->newsLinkArray[$i].'" class="aReadAllNewsText" target="_blanck">Читать полностью</a>';
+                      echo '<p class="pSendNewsToArchive" id="pSendNewsToArchive-'.$newsList->newsIdArray[$i].'">В архив</p>';
                       echo '</div>';
                     }
                 

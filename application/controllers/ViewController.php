@@ -14,6 +14,7 @@ use application\models\view\NewsClass as newsClassNamespace;
 use application\models\SessionClass as sessionClassNamespace;
 use application\models\DataBaseClass as dataBaseClassNamespace;
 use application\models\view\TapeClass as tapeClassnamespace;
+use application\models\view\H1TitleClass as h1TitleClassNamespace;
 
 $sessionAnalysis = new sessionClassNamespace();
 $sessionAnalysis->startSession();
@@ -46,6 +47,9 @@ if(($internalServiceUrlObject->numberRequestedUrl === 0) || ($internalServiceUrl
   //formation code for close pade for index
   $robotsAccess->formingCodeBanAccessRobotsOnPage($internalServiceUrlObject->numberRequestedUrl);
   
+  $h1Title = new h1TitleClassNamespace();
+  $h1Title->formationH1TitleTextForPage($internalServiceUrlObject->numberRequestedUrl);
+  
   $newsList = new newsClassNamespace();
   //get all news from DB for show
   $newsList->getListWithNewsForShow($dataBase->pdoObject);
@@ -77,12 +81,49 @@ if($internalServiceUrlObject->numberRequestedUrl === 5) {
   //formation code for close pade for index
   $robotsAccess->formingCodeBanAccessRobotsOnPage($internalServiceUrlObject->numberRequestedUrl);
   
+  $h1Title = new h1TitleClassNamespace();
+  $h1Title->formationH1TitleTextForPage($internalServiceUrlObject->numberRequestedUrl);
+  
   $tape = new tapeClassnamespace();
   $tape->getTapeList($dataBase->pdoObject);
   
   require_once(VIEW_PUTH.'HtmlHeadView.php');
   require_once(VIEW_PUTH.'BodyHeadView.php');
   require_once(VIEW_PUTH.'BodyTapeListPageView.php');
+  require_once(VIEW_PUTH.'FooterView.php');
+} 
+
+if($internalServiceUrlObject->numberRequestedUrl === 8) {
+  $pageTitle = new titleClassNamespace();
+  //determine page title
+  $pageTitle->formationTitleTextForPage($internalServiceUrlObject->numberRequestedUrl);
+  
+  $pageMetaDescription = new pageMetaDescriptionClassNamespace();
+  //determine page description
+  $pageMetaDescription->formationMetaDescriptionTextForPage($internalServiceUrlObject->numberRequestedUrl);
+  
+  $cssFile = new cssFileClassNamespace();
+  //determine css file
+  $cssFile->formationCssFileName($internalServiceUrlObject->numberRequestedUrl);
+  
+  $mainMenu = new mainMenuClassNamespace();
+  //formation main menu
+  $mainMenu->formationMainMenuForPage($internalServiceUrlObject->numberRequestedUrl);
+  
+  $robotsAccess = new robotsAccessClassNamespace();
+  //formation code for close pade for index
+  $robotsAccess->formingCodeBanAccessRobotsOnPage($internalServiceUrlObject->numberRequestedUrl);
+  
+  $h1Title = new h1TitleClassNamespace();
+  $h1Title->formationH1TitleTextForPage($internalServiceUrlObject->numberRequestedUrl);
+  
+  $newsList = new newsClassNamespace();
+  //get all news from DB for show
+  $newsList->getListWithNewsFromArchiveForShow($dataBase->pdoObject);
+  
+  require_once(VIEW_PUTH.'HtmlHeadView.php');
+  require_once(VIEW_PUTH.'BodyHeadView.php');
+  require_once(VIEW_PUTH.'BodyArchivePageView.php');
   require_once(VIEW_PUTH.'FooterView.php');
 } 
 

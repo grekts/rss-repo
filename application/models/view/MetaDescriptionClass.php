@@ -14,6 +14,7 @@ class MetaDescriptionClass
         case 0: $this->metaDescriptionTextData = 'Лента новых новостей'; break;
         case 1: $this->metaDescriptionTextData = 'Лента новых новостей'; break;
         case 5: $this->metaDescriptionTextData = 'Список RSS лент'; break;
+        case 8: $this->metaDescriptionTextData = 'Лента новостей'; break;
       }
     }
     
