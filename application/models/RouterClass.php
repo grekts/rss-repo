@@ -17,6 +17,7 @@ class RouterClass
       case 7: require_once(CONTROLLER_PUTH.'PublicationController.php'); break;
       case 8: require_once(CONTROLLER_PUTH.'ViewController.php'); break;
       case 9: require_once(CONTROLLER_PUTH.'PublicationController.php'); break;
+      case 10: require_once(CONTROLLER_PUTH.'PublicationController.php'); break;
     }
 
     unset($internalServiceUrlObject);

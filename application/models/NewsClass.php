@@ -192,5 +192,19 @@ class NewsClass extends \DOMDocument
     }
   }
   
+  function deleteReadNews($dbConnect)
+  {
+    try {
+      //delete all read news
+      $query = 'DELETE FROM news
+      WHERE news.read = ?';
+      $prepareQuery = $dbConnect->prepare($query);
+      $prepareQuery->execute(array(1));
+    } catch(PDOException $e) {
+      $dbConnect->rollBack();
+      trigger_error(ERROR_SYSTEM_ERROR.'|!|'.$_SESSION['initializer'], E_USER_ERROR);
+    }
+  }
+  
 }
 

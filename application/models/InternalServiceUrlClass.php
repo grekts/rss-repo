@@ -15,8 +15,14 @@ class InternalServiceUrlClass
   {
     if(isset($this->requestUrl)) {
       
+      //if cron send request for get news from rss tape
       if(isset($_GET['get-news']) === true){
         $this->requestUrl = 'get-news';
+      }
+      
+      //if cron send request for delete all read news
+      if(isset($_GET['delete-read-news']) === true){
+        $this->requestUrl = 'delete-read-news';
       }
       
       //array with all url wich exist in the service
@@ -29,7 +35,8 @@ class InternalServiceUrlClass
         'delete-tape', 
         'send-news-to-archive', 
         'archive',
-        'delete-news-from-archive');
+        'delete-news-from-archive',
+        'delete-read-news');
       
       //count number letter in url
       $coutLetterInUrl = strlen($this->requestUrl);

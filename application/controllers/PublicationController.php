@@ -20,30 +20,41 @@ $dataBase->connectionWithDb();
 
 //if come commant not for change flag reeded news
 if(isset($_POST['idReadNews']) === false) {
-  //set flag with use error handler for determine who start script (cron or user)
-  $_SESSION['initializer'] = 'cron';
+  //if cron send request for get news from rss tape
+  if(isset($_GET['get-news']) === true) {
+    //set flag with use error handler for determine who start script (cron or user)
+    $_SESSION['initializer'] = 'cron';
+
+    $rssTape = new rssTapeClassNamespace();
+    //get all rss tapes from database
+    $rssTape->getRssTapesFromDB($dataBase->pdoObject);
+
+    //news object
+    $news = new newsClassNamespace();
+
+    $htmlTags = new htmlTagsNamespace();
+
+    //processing each rss tape
+    for($i = 0; $i<$rssTape->numberRssTapesInDb; $i++) {
+      $news->getNewsCodeFromRssTape($rssTape->rssTapesList[$i]);
+      $news->getNewsTitleFromDb($dataBase->pdoObject);
+      $news->parseReceivedNewsCode();
+      $news->separatingNewsDescriptionIntoParagraphs();
+      $htmlTags->deleteSeveralHtmlTagsFromNewsCode($news->newsDescriptionArray);
+      $htmlTags->rewriteUrlTagsInCode();
+      $news->newsDescriptionArray = '';
+      $news->newsDescriptionArray = $htmlTags->stringWithDeleteSeveralHtmlTags;
+      $news->sendNewsToDb($rssTape->rssTapesId[$i], $dataBase->pdoObject);
+    }
+  } 
   
-  $rssTape = new rssTapeClassNamespace();
-  //get all rss tapes from database
-  $rssTape->getRssTapesFromDB($dataBase->pdoObject);
-
-  //news object
-  $news = new newsClassNamespace();
-
-  $htmlTags = new htmlTagsNamespace();
-
-  //processing each rss tape
-  for($i = 0; $i<$rssTape->numberRssTapesInDb; $i++) {
-    $news->getNewsCodeFromRssTape($rssTape->rssTapesList[$i]);
-    $news->getNewsTitleFromDb($dataBase->pdoObject);
-    $news->parseReceivedNewsCode();
-    $news->separatingNewsDescriptionIntoParagraphs();
-    $htmlTags->deleteSeveralHtmlTagsFromNewsCode($news->newsDescriptionArray);
-    $htmlTags->rewriteUrlTagsInCode();
-    $news->newsDescriptionArray = '';
-    $news->newsDescriptionArray = $htmlTags->stringWithDeleteSeveralHtmlTags;
-    $news->sendNewsToDb($rssTape->rssTapesId[$i], $dataBase->pdoObject);
+  //if cron send request for delete all read news
+  if(isset($_GET['delete-read-news']) === true){
+    //news object
+    $news = new newsClassNamespace();
+    $news->deleteReadNews($dataBase->pdoObject);
   }
+  
 } else {
   //set flag with use error handler for determine who start script (cron or user)
   $_SESSION['initializer'] = 'user';
