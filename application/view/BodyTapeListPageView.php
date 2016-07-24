@@ -6,8 +6,12 @@ echo '
             <div id="divBlockWithTapeList">';
                 for($i = 0; $i < $tape->numberTape; $i++) {
                   echo '<div class="divOneTape">';
-                  echo '<p class="pTapeUrl">'.$tape->tapeListArray[$i][0].'</p>';
-                  echo '<p class="pDeleteTape" id="pDeleteTape-'.$tape->tapeListArray[$i][1].'">Удалить</p>';
+                      echo '<div class="divBlockWithFlags">';
+                          echo '<img class="imgDeleteTape" src="/public/img/bucket-not-hover.png" title="Удалить" alt="Удалить" id="imgDeleteTape-'.$tape->tapeListArray[$i][1].'" />';
+                      echo '</div>';
+                      echo '<div class="divTapeUrl">';
+                          echo '<p class="pTapeUrl">'.$tape->tapeListArray[$i][0].'</p>';
+                      echo '</div>';
                   echo '</div>'; 
                 }
            echo '</div>

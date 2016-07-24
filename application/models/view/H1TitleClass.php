@@ -13,8 +13,8 @@ class H1TitleClass
       switch($pageNumber){
         case 0: $this->h1TitleTextData = 'Лента новостей'; break;
         case 1: $this->h1TitleTextData = 'Лента новостей'; break;
-        case 5: $this->h1TitleTextData = 'RSS ленты'; break;
-        case 8: $this->h1TitleTextData = 'Архив новостей'; break;
+        case 5: $this->h1TitleTextData = 'Список лент'; break;
+        case 8: $this->h1TitleTextData = 'Архив'; break;
       }
     }
     

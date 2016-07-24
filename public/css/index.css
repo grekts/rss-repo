@@ -115,14 +115,27 @@ h1{
 
 .divHeadPartOneNews:hover{
   cursor: pointer;
-  background-color: #f1f1f1;
+  border-bottom: 1px solid #08c;
+}
+
+.divBlockWithFlags{
+  display: inline-block;
+  vertical-align: top;
+  width: 60px;
+}
+
+.divTitleAndDate{
+  display: inline-block;
+  vertical-align: top;
+  width: 940px;
 }
 
 .pTitleOneNews{
-  margin: 10px 0px 10px 10px;
+  margin: 10px 0px 10px 0px;
   font-size: 14px;
   width: 750px;
   display: inline-block;
+  vertical-align: top;
 }
 
 .pTimeOneNews{
@@ -131,7 +144,8 @@ h1{
   font-size: 12px;
   color: #999;
   width: 100px;
-  display: inline;
+  display: inline-block;
+  vertical-align: top;
 }
 
 .divOneNews{
@@ -156,6 +170,7 @@ h1{
   font-size: 14px;
   color: #08c;
   display: inline-block;
+  vertical-align: top;
 }
 
 .aReadAllNewsText:hover{
@@ -173,30 +188,28 @@ h1{
 
 /*body part only index page*/
 
-.pSendNewsToArchive{
-  float: right;
-  margin: 0px 20px 0px 0px;
-  font-size: 14px;
-  color: #999;
+.imgSendToArchive{
+  display: inline-block;
+  margin: 12px 20px 10px 20px;
+  vertical-align: top;
+  opacity: 0.5;
 }
 
-.pSendNewsToArchive:hover{
-  color: #5a5a5a;
-  text-decoration: underline;
+.imgSendToArchive:hover{
+  background-image: url('/public/img/folder-hover-or-click.png');
 }
 
 /*body part only archive page*/
 
-.pDeleteNewsFromArchive{
-  float: right;
-  margin: 0px 20px 0px 0px;
-  font-size: 14px;
-  color: #999;
+.imgDeleteFromArchive{
+  display: inline-block;
+  margin: 12px 20px 10px 20px;
+  vertical-align: top;
+  opacity: 0.5;
 }
 
-.pDeleteNewsFromArchive:hover{
-  color: #5a5a5a;
-  text-decoration: underline;
+.imgDeleteFromArchive:hover{
+  background-image: url('/public/img/bucket-hover.png');
 }
 
 /*Tape list page*/
@@ -209,26 +222,32 @@ h1{
 
 .divOneTape:hover{
   cursor: pointer;
-  background-color: #f1f1f1;
+  border-bottom: 1px solid #08c;
 }
 
 .pTapeUrl{
-  margin: 10px 0px 10px 10px;
+  margin: 10px 0px 10px 0px;
   font-size: 14px;
   width: 750px;
   display: inline-block;
+  vertical-align: top;
 }
 
-.pDeleteTape{
-  float: right;
-  margin: 10px 20px 0px 0px;
-  font-size: 14px;
-  color: #999;
+.imgDeleteTape{
+  display: inline-block;
+  margin: 12px 20px 10px 20px;
+  vertical-align: top;
+  opacity: 0.5;
 }
 
-.pDeleteTape:hover{
-  color: #90c7ff;
-  text-decoration: underline;
+.imgDeleteTape:hover{
+  background-image: url('/public/img/bucket-hover.png');
+}
+
+.divTapeUrl{
+  display: inline-block;
+  vertical-align: top;
+  width: 940px;
 }
 
 /*Footer*/

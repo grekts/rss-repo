@@ -1,11 +1,11 @@
 $('.buttonSendNewTape').click(sendNewRssTapeToDb);
 $('.inputSendNewTape').focus(setFocusOnInputWithNameNewRss);
 $('.inputSendNewTape').blur(blurOutofInputWithNameNewRss);
-$('.divHeadPartOneNews').click(openNewsDescriptionOrNewsText);
+$('.divTitleAndDate').click(openNewsDescriptionOrNewsText);
 $('.divOneNews').click(openNewsDescriptionOrNewsText);
-$('.pDeleteTape').click(sendTapeNumberForDelete);
-$('.pDeleteNewsFromArchive').click(deleteNewsFromArchive);
-$('.pSendNewsToArchive').click(sendNewsToArchive);
+$('.imgDeleteTape').click(sendTapeNumberForDelete);
+$('.imgDeleteFromArchive').click(deleteNewsFromArchive);
+$('.imgSendToArchive').click(sendNewsToArchive);
 
 function sendNewRssTapeToDb()
 {
@@ -14,7 +14,7 @@ function sendNewRssTapeToDb()
   $.ajax({
     type: "POST",
     url: "new-tape",
-    data: {nameNewTape:nameNewTape},
+    data: {nameNewTape:nameNewTape, getNews:1},
     dataType: "text",
     success: function(data) {
       dataSplit = data.split('|');
@@ -115,6 +115,8 @@ function sendNewsToArchive()
       dataSplit = data.split('|');
       if(dataSplit[0] === 'error') {
         alert(dataSplit[1]);
+      } else {
+        $('#imgSendToArchive-' + newsNumber).attr("src","/public/img/folder-hover-or-click.png");
       }
     }
   });

@@ -21,7 +21,7 @@ $dataBase->connectionWithDb();
 //if come commant not for change flag reeded news
 if(isset($_POST['idReadNews']) === false) {
   //if cron send request for get news from rss tape
-  if(isset($_GET['get-news']) === true) {
+  if((isset($_GET['get-news']) === true) || (isset($_POST['getNews']) === true)) {
     //set flag with use error handler for determine who start script (cron or user)
     $_SESSION['initializer'] = 'cron';
 
