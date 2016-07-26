@@ -1,0 +1,80 @@
+/*html header*/
+
+header{
+  height: 60px;
+  background-color: #eeeeee;
+}
+
+.divHeaderElements{
+  width: 1000px;
+  margin: 0px auto;
+}
+
+/*Logo*/
+
+.aSiteLogo{
+  @include disp-inline-block();
+  text-decoration: none;
+  color: #999;
+  font-weight: bold;
+  font-size: 28px;
+  margin: 15px 0px 0px 0px;
+}
+
+/*Main menu*/
+
+nav{
+  @include disp-inline-block();
+  margin: 23px 0px 0px 150px;
+}
+
+.ulMainMenu{
+  list-style-type: none;
+  padding: 0px;
+}
+
+.liMainMenu{
+  display: inline;
+  margin: 0px 30px 0px 0px;
+}
+
+.aMainMenu{
+  text-decoration: none;
+  color: #08c;
+  font-size: 16px;
+}
+
+.aMainMenu:hover{
+  text-decoration: underline;
+}
+
+/*Block send new tape to system*/
+
+.inputSendNewTape{
+  @include disp-inline-block();
+  margin: 15px 0px 0px 230px;
+  border: 1px solid #b1b1b1;
+  width: 200px;
+  height: 25px;
+  font-size: 14px;
+  padding: 0px 0px 0px 5px;
+  color: #b1b1b1;
+  background-color: #eeeeee;
+}
+
+.buttonSendNewTape{
+  @include disp-inline-block();
+  margin: 15px 0px 0px 20px;
+  border: 1px solid #b1b1b1;
+  width: 100px;
+  height: 27px;
+  font-size: 14px;
+  background-color: #eeeeee;
+  color: #7b7b7b;
+}
+
+.buttonSendNewTape:hover{
+  cursor: pointer;
+  background-color: #e7e7e7;
+}
+

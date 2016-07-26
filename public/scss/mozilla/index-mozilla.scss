@@ -1,0 +1,30 @@
+@import 'common-mixins-mozilla';
+@import 'head-html-part-mozilla';
+@import 'index-and-archive-page-mozilla';
+@import 'tape-page-mozilla';
+@import 'footer-html-part-mozilla';
+
+
+@media screen and (min-width: 1000px) {
+  html {
+    margin-left: calc(100vw - 100%);
+    margin-right: 0;
+  }
+}
+
+*{
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+  font-size: 0px;
+  font-family: Arial, Verdana sans-serif;
+}
+
+body {
+  background-color: #D8D8D8;
+}
+
+.container{
+  margin: 0px auto;
+  width: 1000px;
+}

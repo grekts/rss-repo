@@ -1,95 +1,58 @@
-@media screen and (min-width: 1000px) {
-  html {
-    margin-left: calc(100vw - 100%);
-    margin-right: 0;
-  }
-}
-
-*{
-  margin: 0px;
-  padding: 0px;
-  border: 0px;
-  font-size: 0px;
-  font-family: Arial, Verdana sans-serif;
-}
-
-body {
-  background-color: #D8D8D8;
-}
-
-.container{
-  margin: 0px auto;
-  width: 1000px;
-}
-
 /*html header*/
-
-header{
+header {
   height: 60px;
-  background-color: #eeeeee;
-}
+  background-color: #eeeeee; }
 
-.divHeaderElements{
+.divHeaderElements {
   width: 1000px;
-  margin: 0px auto;
-}
+  margin: 0px auto; }
 
 /*Logo*/
-
-.aSiteLogo{
+.aSiteLogo {
   display: inline-block;
   vertical-align: top;
   text-decoration: none;
   color: #999;
   font-weight: bold;
   font-size: 28px;
-  margin: 15px 0px 0px 0px;
-}
+  margin: 15px 0px 0px 0px; }
 
 /*Main menu*/
-
-nav{
+nav {
   display: inline-block;
   vertical-align: top;
-  margin: 23px 0px 0px 150px;
-}
+  margin: 23px 0px 0px 150px; }
 
-.ulMainMenu{
+.ulMainMenu {
   list-style-type: none;
-  padding: 0px;
-}
+  padding: 0px; }
 
-.liMainMenu{
+.liMainMenu {
   display: inline;
-  margin: 0px 30px 0px 0px;
-}
+  margin: 0px 30px 0px 0px; }
 
-.aMainMenu{
+.aMainMenu {
   text-decoration: none;
   color: #08c;
-  font-size: 16px;
-}
+  font-size: 16px; }
 
-.aMainMenu:hover{
-  text-decoration: underline;
-}
+.aMainMenu:hover {
+  text-decoration: underline; }
 
 /*Block send new tape to system*/
-
-.inputSendNewTape{
+.inputSendNewTape {
   display: inline-block;
   vertical-align: top;
-   margin: 15px 0px 0px 230px;
-   border: 1px solid #b1b1b1;
-   width: 200px;
-   height: 25px;
-   font-size: 14px;
-   padding: 0px 0px 0px 5px;
-   color: #b1b1b1;
-   background-color: #eeeeee;
-}
+  margin: 15px 0px 0px 230px;
+  border: 1px solid #b1b1b1;
+  width: 200px;
+  height: 25px;
+  font-size: 14px;
+  padding: 0px 0px 0px 5px;
+  color: #b1b1b1;
+  background-color: #eeeeee; }
 
-.buttonSendNewTape{
+.buttonSendNewTape {
   display: inline-block;
   vertical-align: top;
   margin: 15px 0px 0px 20px;
@@ -98,176 +61,156 @@ nav{
   height: 27px;
   font-size: 14px;
   background-color: #eeeeee;
-  color: #7b7b7b;
-}
+  color: #7b7b7b; }
 
-.buttonSendNewTape:hover{
+.buttonSendNewTape:hover {
   cursor: pointer;
-  background-color: #e7e7e7;
-}
+  background-color: #e7e7e7; }
 
 /*H1 titile*/
-h1{
+h1 {
   font-size: 16px;
-  margin: 30px 0px 20px 0px;
-}
+  margin: 30px 0px 20px 0px; }
 
 /*body part index page and archive*/
-
-.divHeadPartOneNews{
+.divHeadPartOneNews {
   margin: 0px 0px 0px 0px;
   width: 100%;
-  border-bottom: 1px solid #adadad;
-}
+  border-bottom: 1px solid #adadad; }
+  .divHeadPartOneNews:hover {
+    cursor: pointer;
+    border-bottom: 1px solid #08c; }
 
-.divHeadPartOneNews:hover{
-  cursor: pointer;
-  border-bottom: 1px solid #08c;
-}
-
-.divBlockWithFlags{
+.divBlockWithFlags {
   display: inline-block;
   vertical-align: top;
-  width: 60px;
-}
+  width: 60px; }
 
-.divTitleAndDate{
+.divTitleAndDate {
   display: inline-block;
   vertical-align: top;
-  width: 940px;
-}
+  width: 940px; }
 
-.pTitleOneNews{
+.pTitleOneNews {
+  display: inline-block;
+  vertical-align: top;
   margin: 10px 0px 10px 0px;
   font-size: 14px;
-  width: 750px;
+  width: 750px; }
+
+.pTimeOneNews {
   display: inline-block;
   vertical-align: top;
-}
-
-.pTimeOneNews{
   margin: 12px 30px 0px 0px;
   float: right;
   font-size: 12px;
   color: #999;
-  width: 100px;
-  display: inline-block;
-  vertical-align: top;
-}
+  width: 100px; }
 
-.divOneNews{
-  margin: 0px 0px 0px 10px;;
+.divOneNews {
+  margin: 0px 0px 0px 10px;
   width: 950px;
   border-bottom: 1px solid #adadad;
-  display: none;
-}
+  display: none; }
 
-.divOneNews:hover{
-  cursor: pointer;
-}
+.divOneNews:hover {
+  cursor: pointer; }
 
-.pDescriptionOneNews{
+.pDescriptionOneNews {
   margin: 10px 0px 10px 0px;
   font-size: 14px;
-  line-height: 21px;
-}
+  line-height: 21px; }
 
-.aReadAllNewsText{
+.aReadAllNewsText {
+  display: inline-block;
+  vertical-align: top;
   margin: 0px 0px 15px 0px;
   font-size: 14px;
-  color: #08c;
-  display: inline-block;
-  vertical-align: top;
-}
+  color: #08c; }
 
-.aReadAllNewsText:hover{
-  color: #90c7ff;
-}
+.aReadAllNewsText:hover {
+  color: #90c7ff; }
 
-.aExternalUrl{
+.aExternalUrl {
   font-size: 14px;
-  color: #999;
-}
+  color: #999; }
 
-.aExternalUrl:hover{
-  color: #5a5a5a;
-}
+.aExternalUrl:hover {
+  color: #5a5a5a; }
 
 /*body part only index page*/
-
-.imgSendToArchive{
+.imgSendToArchive {
   display: inline-block;
-  margin: 12px 20px 10px 20px;
   vertical-align: top;
-  opacity: 0.5;
-}
-
-.imgSendToArchive:hover{
-  background-image: url('/public/img/folder-hover-or-click.png');
-}
+  margin: 12px 20px 10px 20px;
+  opacity: 0.5; }
+  .imgSendToArchive:hover {
+    background-image: url('/public/img/folder-hover-or-click.png'); }
 
 /*body part only archive page*/
-
-.imgDeleteFromArchive{
+.imgDeleteFromArchive {
   display: inline-block;
-  margin: 12px 20px 10px 20px;
   vertical-align: top;
-  opacity: 0.5;
-}
-
-.imgDeleteFromArchive:hover{
-  background-image: url('/public/img/bucket-hover.png');
-}
+  margin: 12px 20px 10px 20px;
+  opacity: 0.5; }
+  .imgDeleteFromArchive:hover {
+    background-image: url('/public/img/bucket-hover.png'); }
 
 /*Tape list page*/
-
-.divOneTape{
+.divOneTape {
   margin: 0px 0px 0px 0px;
   width: 100%;
-  border-bottom: 1px solid #adadad;
-}
+  border-bottom: 1px solid #adadad; }
+  .divOneTape:hover {
+    cursor: pointer;
+    border-bottom: 1px solid #08c; }
 
-.divOneTape:hover{
-  cursor: pointer;
-  border-bottom: 1px solid #08c;
-}
-
-.pTapeUrl{
+.pTapeUrl {
+  display: inline-block;
+  vertical-align: top;
   margin: 10px 0px 10px 0px;
   font-size: 14px;
-  width: 750px;
+  width: 750px; }
+
+.imgDeleteTape {
   display: inline-block;
   vertical-align: top;
-}
-
-.imgDeleteTape{
-  display: inline-block;
   margin: 12px 20px 10px 20px;
-  vertical-align: top;
-  opacity: 0.5;
-}
+  opacity: 0.5; }
+  .imgDeleteTape:hover {
+    background-image: url('/public/img/bucket-hover.png'); }
 
-.imgDeleteTape:hover{
-  background-image: url('/public/img/bucket-hover.png');
-}
-
-.divTapeUrl{
+.divTapeUrl {
   display: inline-block;
   vertical-align: top;
-  width: 940px;
-}
+  width: 940px; }
 
 /*Footer*/
-
-footer{
-  height: 60px;
-}
+footer {
+  height: 60px; }
 
 /*Copyright in footer*/
-
-.pCopyrightData{
-  float: left;
+.pCopyrightData {
   margin: 30px 0px 0px 0px;
   color: #999;
-  font-size: 12px;
-}
+  font-size: 12px; }
+
+@media screen and (min-width: 1000px) {
+  html {
+    margin-left: calc(100vw - 100%);
+    margin-right: 0; } }
+* {
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+  font-size: 0px;
+  font-family: Arial, Verdana sans-serif; }
+
+body {
+  background-color: #D8D8D8; }
+
+.container {
+  margin: 0px auto;
+  width: 1000px; }
+
+/*# sourceMappingURL=index-mozilla.css.map */

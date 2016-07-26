@@ -1,0 +1,18 @@
+/*Tape list page*/
+
+.divOneTape{
+  @include div-news-and-pate-title()
+}
+
+.pTapeUrl{
+  @include news-tittle-and-tape-url();
+}
+
+.imgDeleteTape{
+  @include img-delete-or-send("12px 20px 10px 20px", "url('/public/img/bucket-hover.png')");
+}
+
+.divTapeUrl{
+  @include disp-inline-block();
+  width: 940px;
+}
