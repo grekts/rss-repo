@@ -8,9 +8,13 @@ HTML               | PHP
 CSS                | IDNA convert
 JavaScript         | PDO
 JQuery             | Cron
-AJAX               |
+AJAX               | MySQL
 
-В качестве СУБД использовался MySQL.
+Для ускорения разработки применялсиь
+
+Инструмент         |
+-------------------|
+SCSS               |
 
 ### Особенности функционирования
 
