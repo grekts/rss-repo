@@ -3,9 +3,8 @@
   vertical-align: top;
 }
 
-@mixin div-news-and-pate-title(){
-  margin: 0px 0px 0px 0px;
-  width: 100%;
+@mixin div-news-and-tape-title(){
+  @include disp-inline-block();
   border-bottom: 1px solid #adadad;
 
   &:hover{

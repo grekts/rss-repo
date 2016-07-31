@@ -1,8 +1,8 @@
 <?php
 
 echo '    
-        <div id="main">
-            <h1>'.$h1Title->h1TitleTextData.'</h1>
+        <div class="divMain">
+            <h1 class="h1Element">'.$h1Title->h1TitleTextData.'</h1>
             <div id="divBlockWithNewsList">';
                 
                     for($i = 0; $i<$newsList->numberNewsForShow; $i++)

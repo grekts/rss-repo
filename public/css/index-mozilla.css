@@ -1,21 +1,21 @@
 /*html header*/
-header {
-  height: 60px;
+.headerElement {
   background-color: #eeeeee; }
 
 .divHeaderElements {
+  position: relative;
   width: 1000px;
-  margin: 0px auto; }
+  margin: 0px auto;
+  height: 60px; }
 
 /*Logo*/
 .aSiteLogo {
-  display: inline-block;
-  vertical-align: top;
+  position: absolute;
+  top: 15px;
   text-decoration: none;
   color: #999;
   font-weight: bold;
-  font-size: 28px;
-  margin: 15px 0px 0px 0px; }
+  font-size: 28px; }
 
 /*Main menu*/
 nav {
@@ -24,6 +24,8 @@ nav {
   margin: 23px 0px 0px 150px; }
 
 .ulMainMenu {
+  display: inline-block;
+  vertical-align: top;
   list-style-type: none;
   padding: 0px; }
 
@@ -32,18 +34,19 @@ nav {
   margin: 0px 30px 0px 0px; }
 
 .aMainMenu {
+  display: inline-block;
+  vertical-align: top;
   text-decoration: none;
   color: #08c;
   font-size: 16px; }
-
-.aMainMenu:hover {
-  text-decoration: underline; }
+  .aMainMenu:hover {
+    text-decoration: underline; }
 
 /*Block send new tape to system*/
 .inputSendNewTape {
-  display: inline-block;
-  vertical-align: top;
-  margin: 15px 0px 0px 230px;
+  position: absolute;
+  top: 15px;
+  right: 160px;
   border: 1px solid #b1b1b1;
   width: 200px;
   height: 25px;
@@ -53,29 +56,28 @@ nav {
   background-color: #eeeeee; }
 
 .buttonSendNewTape {
-  display: inline-block;
-  vertical-align: top;
-  margin: 15px 0px 0px 20px;
+  position: absolute;
+  top: 15px;
+  right: 40px;
   border: 1px solid #b1b1b1;
   width: 100px;
   height: 27px;
   font-size: 14px;
   background-color: #eeeeee;
   color: #7b7b7b; }
-
-.buttonSendNewTape:hover {
-  cursor: pointer;
-  background-color: #e7e7e7; }
+  .buttonSendNewTape:hover {
+    cursor: pointer;
+    background-color: #e7e7e7; }
 
 /*H1 titile*/
-h1 {
+.h1Element {
   font-size: 16px;
   margin: 30px 0px 20px 0px; }
 
 /*body part index page and archive*/
 .divHeadPartOneNews {
-  margin: 0px 0px 0px 0px;
-  width: 100%;
+  display: inline-block;
+  vertical-align: top;
   border-bottom: 1px solid #adadad; }
   .divHeadPartOneNews:hover {
     cursor: pointer;
@@ -101,35 +103,34 @@ h1 {
 .pTimeOneNews {
   display: inline-block;
   vertical-align: top;
-  margin: 12px 30px 0px 0px;
+  margin: 14px 10px 0px 0px;
   float: right;
   font-size: 12px;
   color: #999;
   width: 100px; }
 
 .divOneNews {
-  margin: 0px 0px 0px 10px;
-  width: 950px;
+  width: 100%;
   border-bottom: 1px solid #adadad;
   display: none; }
-
-.divOneNews:hover {
-  cursor: pointer; }
+  .divOneNews:hover {
+    cursor: pointer; }
 
 .pDescriptionOneNews {
-  margin: 10px 0px 10px 0px;
+  display: inline-block;
+  vertical-align: top;
+  margin: 10px 20px 10px 20px;
   font-size: 14px;
   line-height: 21px; }
 
 .aReadAllNewsText {
   display: inline-block;
   vertical-align: top;
-  margin: 0px 0px 15px 0px;
+  margin: 0px 0px 15px 20px;
   font-size: 14px;
   color: #08c; }
-
-.aReadAllNewsText:hover {
-  color: #90c7ff; }
+  .aReadAllNewsText:hover {
+    color: #90c7ff; }
 
 .aExternalUrl {
   font-size: 14px;
@@ -158,8 +159,8 @@ h1 {
 
 /*Tape list page*/
 .divOneTape {
-  margin: 0px 0px 0px 0px;
-  width: 100%;
+  display: inline-block;
+  vertical-align: top;
   border-bottom: 1px solid #adadad; }
   .divOneTape:hover {
     cursor: pointer;
@@ -187,18 +188,16 @@ h1 {
 
 /*Footer*/
 footer {
+  margin: 0px auto;
+  width: 1000px;
   height: 60px; }
 
 /*Copyright in footer*/
 .pCopyrightData {
-  margin: 30px 0px 0px 0px;
+  margin: 30px 0px 0px 20px;
   color: #999;
   font-size: 12px; }
 
-@media screen and (min-width: 1000px) {
-  html {
-    margin-left: calc(100vw - 100%);
-    margin-right: 0; } }
 * {
   margin: 0px;
   padding: 0px;
@@ -209,7 +208,7 @@ footer {
 body {
   background-color: #D8D8D8; }
 
-.container {
+.divMain {
   margin: 0px auto;
   width: 1000px; }
 

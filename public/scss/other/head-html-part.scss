@@ -1,24 +1,25 @@
 /*html header*/
 
-header{
-  height: 60px;
+.headerElement{
   background-color: #eeeeee;
 }
 
 .divHeaderElements{
+  position: relative;
   width: 1000px;
   margin: 0px auto;
+  height: 60px;
 }
 
 /*Logo*/
 
 .aSiteLogo{
-  @include disp-inline-block();
+  position: absolute;
+  top: 15px;
   text-decoration: none;
   color: #999;
   font-weight: bold;
   font-size: 28px;
-  margin: 15px 0px 0px 0px;
 }
 
 /*Main menu*/
@@ -29,6 +30,7 @@ nav{
 }
 
 .ulMainMenu{
+  @include disp-inline-block();
   list-style-type: none;
   padding: 0px;
 }
@@ -39,20 +41,22 @@ nav{
 }
 
 .aMainMenu{
+  @include disp-inline-block();
   text-decoration: none;
   color: #08c;
   font-size: 16px;
-}
 
-.aMainMenu:hover{
-  text-decoration: underline;
+  &:hover{
+    text-decoration: underline;
+  }
 }
 
 /*Block send new tape to system*/
 
 .inputSendNewTape{
-  @include disp-inline-block();
-  margin: 15px 0px 0px 230px;
+  position: absolute;
+  top: 15px;
+  right: 160px;
   border: 1px solid #b1b1b1;
   width: 200px;
   height: 25px;
@@ -63,18 +67,19 @@ nav{
 }
 
 .buttonSendNewTape{
-  @include disp-inline-block();
-  margin: 15px 0px 0px 20px;
+  position: absolute;
+  top: 15px;
+  right: 40px;
   border: 1px solid #b1b1b1;
   width: 100px;
   height: 27px;
   font-size: 14px;
   background-color: #eeeeee;
   color: #7b7b7b;
-}
 
-.buttonSendNewTape:hover{
-  cursor: pointer;
-  background-color: #e7e7e7;
+  &:hover{
+    cursor: pointer;
+    background-color: #e7e7e7;
+  }
 }
 
