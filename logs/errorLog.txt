@@ -1,0 +1,11 @@
+Номер ошибки: 1 Сообщение: Using $this when not in object context Файл: F:\OpenServer\domains\datajob2.ru\lib\app\ErrorHandler.php Номер строки: 45 Дата: 22.08.2016 14:07
+Номер ошибки: 1 Сообщение: Using $this when not in object context Файл: F:\OpenServer\domains\datajob2.ru\lib\app\ErrorHandler.php Номер строки: 45 Дата: 22.08.2016 14:08
+Номер ошибки: 1 Сообщение: Using $this when not in object context Файл: F:\OpenServer\domains\datajob2.ru\lib\app\ErrorHandler.php Номер строки: 45 Дата: 22.08.2016 14:09
+Номер ошибки: 1 Сообщение: Using $this when not in object context Файл: F:\OpenServer\domains\datajob2.ru\lib\app\ErrorHandler.php Номер строки: 45 Дата: 22.08.2016 14:10
+Номер ошибки: 1 Сообщение: Using $this when not in object context Файл: F:\OpenServer\domains\datajob2.ru\lib\app\ErrorHandler.php Номер строки: 45 Дата: 22.08.2016 14:11
+Номер ошибки: 1 Сообщение: Using $this when not in object context Файл: F:\OpenServer\domains\datajob2.ru\lib\app\ErrorHandler.php Номер строки: 45 Дата: 22.08.2016 14:12
+Номер ошибки: 1 Сообщение: Using $this when not in object context Файл: F:\OpenServer\domains\datajob2.ru\lib\app\ErrorHandler.php Номер строки: 45 Дата: 22.08.2016 14:13
+Номер ошибки: 1 Сообщение: Using $this when not in object context Файл: F:\OpenServer\domains\datajob2.ru\lib\app\ErrorHandler.php Номер строки: 45 Дата: 22.08.2016 14:14
+Номер ошибки: 1 Сообщение: Using $this when not in object context Файл: F:\OpenServer\domains\datajob2.ru\lib\app\ErrorHandler.php Номер строки: 45 Дата: 22.08.2016 14:15
+Номер ошибки: 1 Сообщение: Using $this when not in object context Файл: F:\OpenServer\domains\datajob2.ru\lib\app\ErrorHandler.php Номер строки: 45 Дата: 22.08.2016 14:16
+Номер ошибки: 1 Сообщение: Using $this when not in object context Файл: F:\OpenServer\domains\datajob2.ru\lib\app\ErrorHandler.php Номер строки: 45 Дата: 22.08.2016 14:17
