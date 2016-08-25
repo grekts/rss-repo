@@ -16,7 +16,12 @@ class Filter
 
 			return $inputText;
 		} else {
-			trigger_error('Не указаны входные данные или их тип неверен||0');
+			if($dataType !== 'string') {
+				Maker::$app -> error('В методе '.__METHOD__.' тип данных входного параметра не соответствует типу string');
+			}
+			if($data === '') {
+				Maker::$app -> error('В методе '.__METHOD__.' не указаны данные во входном параметре');
+			}
 		}
 	}
 }

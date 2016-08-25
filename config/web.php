@@ -3,9 +3,9 @@
 return [
 
 	'db' => [
-		'dbName' => 'database',
-		'dbUserName' => 'user',
-		'dbPass' => 'fghfgh',
+		'dbName' => 'rssdatabase',
+		'dbUserName' => 'rssbatabaseuser',
+		'dbPass' => '',
 		'dbHost' => 'localhost'
 	],
 
@@ -20,8 +20,7 @@ return [
 		'/delete-feed' => 'feed/delete'
 	],
 
-	'indexUrl' => 'Site/Index',
-	'separator' => '|!|',
-	'debug' => 'Off'
+	'indexUrl' => 'site/index',
+	'separator' => '|!|'
 
 ];

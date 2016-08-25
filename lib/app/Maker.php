@@ -35,13 +35,13 @@ class Maker
 			//Если 3 ссылки ('.', '..' и файл)
 			if($filesNumber === 3) {
 				//Формируем адрес до пользовательского файла конфигурации
-				$userConfigFilePuth = '../config/'.$result[2];
+				$userConfigFilePuth = __DIR__.'/../../config/'.$result[2];
 				//Еще раз проверяе есть ли такой файл
 				if(file_exists($userConfigFilePuth)) {
 					//Получаем данные из конфигурациооного файла пользователя
-					$userConfigData = require_once('../config/'.$result[2]);
+					$userConfigData = require_once(__DIR__.'/../../config/'.$result[2]);
 					//Получаем данные из системного конфигурациооного файла
-					$makerConfigData = require_once('../lib/app/config/makerConfig.php');
+					$makerConfigData = require_once(__DIR__.'/config/makerConfig.php');
 					//Получаем ключи (названия параметров) из пользователького файла конфигурации
 					$userConfigKeys = array_keys($userConfigData);
 					//Получаем ключи (названия параметров) из системного файла конфигурации
@@ -73,7 +73,7 @@ class Maker
 
 	//Метод создания приложением нового обънкта модуля
 	private function newObject($objectName) {
-		$modulesDir = scandir('../lib/app');
+		$modulesDir = scandir(__DIR__);
 		$fileName = $objectName.'.php';
 		foreach ($modulesDir as $moduleFile) {
 			if($fileName === $moduleFile) {
@@ -82,7 +82,7 @@ class Maker
 			}
 		}
 
-		$modulesDir = scandir('../lib/app/modules');
+		$modulesDir = scandir(__DIR__.'/modules');
 		$fileName = $objectName.'.php';
 		foreach ($modulesDir as $moduleFile) {
 			if($fileName === $moduleFile) {
@@ -91,7 +91,7 @@ class Maker
 			}
 		}
 
-		$userControllersDir = scandir('../controllers');
+		$userControllersDir = scandir(__DIR__.'/../../controllers');
 		foreach ($userControllersDir as $userController) {
 			if($fileName === $userController) {
 				$url = '\contrillers\\'.$objectName;
@@ -99,7 +99,7 @@ class Maker
 			}
 		}
 
-		$userModelsDir = scandir('../models');
+		$userModelsDir = scandir(__DIR__.'/../../models');
 		foreach ($userModelsDir as $userModel) {
 			if($fileName === $userModel) {
 				$url = '\models\\'.$objectName;
@@ -107,7 +107,7 @@ class Maker
 			}
 		}
 
-		$modulesDir = scandir('../lib/idna');
+		$modulesDir = scandir(__DIR__.'/../idna');
 		$fileName = $objectName.'.php';
 		//Флаг определяет нашел ли последний блок кода файл класса
 		$flagCreateObject = 0;
@@ -125,28 +125,28 @@ class Maker
 		}
 	}
 
-	public function devideUrl($data) {
+	public function devideUrl($data = '') {
 		$object = $this -> newObject('Converter');
 	 	$result = $object -> devideUrl($data);
 	 	$object = null;
 	 	return $result;
 	}
 
-	public function encodingPuth($data) {
+	public function encodingPuth($data = '') {
 		$object = $this -> newObject('Converter');
 	 	$result = $object ->encodingPuth($data);
 	 	$object = null;
 	 	return $result;
 	}
 
-	public function getFullLink($data) {
+	public function getFullLink($data = '') {
 		$object = $this -> newObject('Converter');
 	 	$result = $object ->getFullLink($data);
 	 	$object = null;
 	 	return $result;
 	}
 
-	public function devideByTag($data, $inputSepatator)	{
+	public function devideByTag($data = '', $inputSepatator = '') {
 		$outputSepatator = Maker::$app -> configData['separator'];
 		$object = $this -> newObject('Converter');
 	 	$result = $object -> devideByTag($data, $inputSepatator, $outputSepatator);
@@ -154,14 +154,14 @@ class Maker
 	 	return $result;
 	}
 
-	public function deleteHtmlTags($data, $tagList = [])	{
+	public function deleteHtmlTags($data = '', $tagList = [])	{
 		$object = $this -> newObject('Converter');
 	 	$result = $object -> deleteHtmlTags($data, $tagList);
 	 	$object = null;
 	 	return $result;
 	}
 
-	public function convertExternalUrls($data, $cssClass = '')	{
+	public function convertExternalUrls($data = '', $cssClass = '')	{
 		$object = $this -> newObject('Converter');
 	 	$result = $object -> convertExternalUrls($data, $cssClass);
 	 	$object = null;
@@ -175,21 +175,21 @@ class Maker
 	 	return $result;
 	}
 
-	public function getControllerName($url) {
+	public function getControllerName($url = '') {
 		$object = $this -> newObject('Converter');
 	 	$result = $object -> getControllerName($url);
 	 	$object = null;
 	 	return $result;
 	}
 
-	public function  getActionName($url) {
+	public function  getActionName($url = '') {
 		$object = $this -> newObject('Converter');
 	 	$result = $object -> getActionName($url);
 	 	$object = null;
 	 	return $result;
 	}
 
-	public function  getViewPuth($url, $viewName) {
+	public function  getViewPuth($url = '', $viewName = '') {
 		$object = $this -> newObject('Converter');
 	 	$result = $object -> getViewPuth($url, $viewName);
 	 	$object = null;
@@ -203,52 +203,62 @@ class Maker
 		}
 	}
 
-	public function query($query, $vars) {
+	public function query($query = '', $vars = []) {
 		return \lib\app\modules\DbWorker::$db -> query($query, $vars);
 	}
 
-	private function determineShowErrors($flagShowErrors) {
+	private function determineShowErrors($flagShowErrors = '') {
 		$object = $this -> newObject('ErrorHandler');
 	 	$object -> determineShowErrors($flagShowErrors);
 	 	$object = null;
 	}
 
+	public function error($message = '', $flagUserMessage = 0) {
+		//Получаем данные о том в каком файле и на какой строке произошла ошибка
+		$errorPlaceInfo = debug_backtrace();
+		$fileName = $errorPlaceInfo[0]['file'];
+		$lineNumber = $errorPlaceInfo[0]['line'];
 
-	public function filter($data) {
+		$object = $this -> newObject('ErrorHandler');
+	 	$object ->  error($message, $fileName, $lineNumber, $flagUserMessage);
+	 	$object = null;
+	}
+
+	public function filter($data = '') {
 		$object = $this -> newObject('Filter');
 	 	$result = $object -> filter($data);
 	 	$object = null;
 	 	return $result;
 	}
 
-	public function encodingDomain($data) {
+	public function encodingDomain($data = '') {
 		$object = $this -> newObject('idna_convert');
 	 	$result = $object ->encode($data);
 	 	$object = null;
 	 	return $result;
 	}
 
-	public function render($viewName, $vars)	{
+	public function render($viewName = '', $vars = [])	{
 		$object = $this -> newObject('PageGenerator');
 	 	$result = $object -> render($viewName, $vars);
 	 	$object = null;
 	 	return $result;
 	}
 
-	public function tagRegistration($tags)	{
+	public function tagRegistration($tags = [])	{
 		$object = $this -> newObject('PageGenerator');
 	 	$object -> tagRegistration($tags);
 	 	$object = null;
 	}
 
-	public function parseRss($data)	{
+	public function parseRss($data = '') {
 		$object = $this -> newObject('Parser');
 	 	$result = $object -> parseRss($data);
 	 	$object = null;
 	 	return $result;
 	}
 
-	public function routingToView($viewName, $vars) {
+	public function routingToView($viewName = '', $vars = []) {
 		$object = $this -> newObject('Router');
 		$object -> routingToView($viewName, $vars);
 		$object = null;
@@ -260,12 +270,18 @@ class Maker
 		$object = null;
 	}
 
-	public function checkUrlFormat($data) {
+	public function checkUrlFormat($data = '') {
 		$object = $this -> newObject('Validator');
 		$result = $object -> checkUrlFormat($data);
 		$object = null;
 		return $result;
 	}
 
+	public function checkControllerActionName($data = '') {
+		$object = $this -> newObject('Validator');
+		$result = $object -> checkControllerActionName($data);
+		$object = null;
+		return $result;
+	}
 
 }

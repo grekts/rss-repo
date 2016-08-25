@@ -2,8 +2,50 @@
 
 namespace lib\app;
 
+use \lib\app\Maker;
+
 class ErrorHandler
 {
+	//Метод формирования сообщения об ошибке
+	public function error($message, $file, $line, $flagUserMessage) {
+		$dataType1 = gettype($message);
+		$dataType2 = gettype($flagUserMessage);
+		$dataType3 = gettype($file);
+		$dataType4 = gettype($line);
+		if(($dataType1 === 'string') 
+			&& ($dataType2 === 'integer') 
+			&& ($dataType3 === 'string') 
+			&& ($dataType4 === 'integer') 
+			&& ($message !== '') 
+			&& ($flagUserMessage !== '') 
+			&& ($file !== '')
+			&& ($line !== '')) {
+			//Если сообщение не предназначено для обычного пользователя
+			if($flagUserMessage === 0) {
+				$this -> showError('-', $message, $file, $line);
+			} else { //если сообщение должно выводитьяс обычному пользователю
+				$message .= Maker::$app -> configData['userMessage'];
+				$this -> showError('-', $message, $file, $line);
+			}
+		} else {
+			if ($dataType1 !== 'string') {
+				trigger_error('В методе '.__METHOD__.' тип данных первого входного параметра, не соответствует типу string');
+			}
+			if ($dataType2 !== 'integer') {
+				trigger_error('В методе '.__METHOD__.' тип данных первого входного параметра, не соответствует типу integer');
+			}
+			if ($dataType3 !== 'string') {
+				trigger_error('В методе '.__METHOD__.' тип данных первого входного параметра, не соответствует типу string');
+			}
+			if ($dataType4 !== 'integer') {
+				trigger_error('В методе '.__METHOD__.' тип данных первого входного параметра, не соответствует типу integer');
+			}
+			if(($message === '') || ($flagUserMessage === '') || ($file === '') || ($line === '')) {
+				trigger_error('В методе '.__METHOD__.' не указаны данные во-входных параметрах');
+			}
+		}
+	}
+
 	//Метод установки показывать ошибки или нет (зависит от настроек)
 	public function determineShowErrors($flagWorkDebug) {
 		$dataType = gettype($flagWorkDebug);
@@ -11,7 +53,12 @@ class ErrorHandler
 			error_reporting(E_ALL | E_STRICT);
 			ini_set('display_errors', $flagWorkDebug);
 		} else {
-			trigger_error('Входные данные пусты или имеют неверный тип||0');
+			if($dataType !== 'string') {
+				Maker::$app -> error('В методе '.__METHOD__.' тип данных входного параметра, не соответствует типу string');
+			}
+			if($flagWorkDebug === '') {
+				Maker::$app -> error('В методе '.__METHOD__.' не указаны данные во входном параметре');
+			}
 		}
 	}
 
@@ -41,7 +88,7 @@ class ErrorHandler
 	}
 
 	//Обработка исключений
-	public static function processingExceptionError(\Exception $e) {
+	public function processingExceptionError(\Exception $e) {
 		$this -> showError(get_class($e), $e -> getMessage(), $e -> getFile(), $e -> getLine());
 		exit();
 	}
@@ -57,7 +104,7 @@ class ErrorHandler
 			echo 'error|<hr>Номер ошибки: '.$errorNumberOrType.'<hr>Сообщение: '.$errorString.'<hr>Файл: '.$errorFile.'<hr>Номер строки: '.$errorLine;
 		} else { //Если дебаг выключен
 			//Если сообщение не содержит метки, что оно является системным (метка пользовательская или установленная разработчиком приложения)
-			if((mb_stripos(Maker::$app -> configData['techMessage'], $errorString) === false) && (mb_stripos('||0', $errorString) === false)) {
+			if((mb_stripos(Maker::$app -> configData['userMessage'], $errorString) === false) && (mb_stripos('||0', $errorString) === false)) {
 				echo 'error|'.$errorString;
 			} else {
 				echo 'error|Ошибка системы';

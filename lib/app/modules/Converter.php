@@ -18,10 +18,10 @@ class Converter
 				//Если текущая ссылка из массив совпадает с запрошенной
 				if($userUrl === $_SERVER['REQUEST_URI']) {
 					//берем ссылку - синоним
-					$url = $linkManager[$userUrl];
+					$url = strtolower($linkManager[$userUrl]);
 					break;
 				} else {
-					$url = $_SERVER['REQUEST_URI'];
+					$url = strtolower($_SERVER['REQUEST_URI']);
 				}
 			}
 		} else { //Если пользователь не указал ссылки-синонимы
@@ -34,105 +34,169 @@ class Converter
 
 	//Метод формирования имени контроллера
 	public function getControllerName($url) {
-		$controllerName = '';
-		//Разделяем ссылку
-		$explodeUrl = explode('/', $url);
-		//Считаем сколько частей в ссылке
-		$numberUrlPart = count($explodeUrl);
-		//Если последняя часть после слеша не пустая
-		if($explodeUrl[$numberUrlPart - 1] !== '') {
-		    $controllerNameInUrl = $explodeUrl[$numberUrlPart - 2];
-		} else { //Если пустая
-			//Если часть ссылки перед послдним слешем не пустая
-			if($explodeUrl[$numberUrlPart - 2] !== '') {
-				$controllerNameInUrl = $explodeUrl[$numberUrlPart - 3];
-			} else { //Если пустая
-				$explodeUrl = explode('/', Maker::$app -> userConfig['indexUrl']);
-				$numberUrlPart = count($explodeUrl);
-				$controllerNameInUrl = $explodeUrl[$numberUrlPart - 2];
+		$dataType = gettype($url);
+		if(($dataType === 'string') && ($url !== '')) {
+			//Если в ссылке первый символ являетяс слешем
+			if(strpos($url, '/') === 0) {
+				//удаляем его
+				$url = mb_substr($url, 1);
 			}
-		}
-
-		//Если в имене контроллера нет "-"
-		if(strpos($controllerNameInUrl, '-') === false) {
-			//Делаем заглавной первую букву
-			$controllerName = substr_replace($controllerNameInUrl, strtoupper(mb_substr($controllerNameInUrl, 0, 1)), 0, 1);
-		} else { //если "-" есть
-			//Разделяем часть ссылки
-			$explodeControllerNameInUrl = explode('-', $controllerNameInUrl);
 			$controllerName = '';
-			//Проходим все части имени контроллера
-			foreach ($explodeControllerNameInUrl as $partControllerNameInUrl) {
+			//Разделяем ссылку
+			$explodeUrl = explode('/', $url);
+			//Считаем сколько частей в ссылке
+			$numberUrlPart = count($explodeUrl);
+			//Если последняя часть после слеша не пустая
+			if($explodeUrl[$numberUrlPart - 1] !== '') {
+			    //проверяем правильность формата имени контроллера
+				Maker::$app -> checkControllerActionName($explodeUrl[$numberUrlPart - 2]);
+			    $controllerNameInUrl = $explodeUrl[$numberUrlPart - 2];
+			   
+			} else { //Если пустая
+				//Если часть ссылки перед послдним слешем не пустая
+				if($explodeUrl[$numberUrlPart - 2] !== '') {
+					Maker::$app -> checkControllerActionName($explodeUrl[$numberUrlPart - 3]);
+			   		$controllerNameInUrl = $explodeUrl[$numberUrlPart - 3];
+				} else { //Если пустая
+					$explodeUrl = explode('/', Maker::$app -> userConfig['indexUrl']);
+					$numberUrlPart = count($explodeUrl);
+					Maker::$app -> checkControllerActionName($explodeUrl[$numberUrlPart - 2]);
+			   		$controllerNameInUrl = $explodeUrl[$numberUrlPart - 2];
+				}
+			}
+
+			//Если в имене контроллера нет "-"
+			if(strpos($controllerNameInUrl, '-') === false) {
 				//Делаем заглавной первую букву
-				$controllerName .= substr_replace($partControllerNameInUrl, strtoupper(mb_substr($partControllerNameInUrl, 0, 1)), 0, 1);
+				$controllerName = substr_replace($controllerNameInUrl, strtoupper(mb_substr($controllerNameInUrl, 0, 1)), 0, 1);
+			} else { //если "-" есть
+				//Разделяем часть ссылки
+				$explodeControllerNameInUrl = explode('-', $controllerNameInUrl);
+				$controllerName = '';
+				//Проходим все части имени контроллера
+				foreach ($explodeControllerNameInUrl as $partControllerNameInUrl) {
+					//Делаем заглавной первую букву
+					$controllerName .= substr_replace($partControllerNameInUrl, strtoupper(mb_substr($partControllerNameInUrl, 0, 1)), 0, 1);
+				}
+			}
+
+			unset($url, $explodeUrl, $numberUrlPart, $controllerNameInUrl);
+
+			return $controllerName .= 'Controller';
+		} else {
+			if($dataType !== 'string') {
+				Maker::$app -> error('В методе '.__METHOD__.' тип данных входного параметра не соответствует типу string');
+			}
+			if($url === '') {
+				Maker::$app -> error('В методе '.__METHOD__.' не указаны данные во входном параметре');
 			}
 		}
-
-		unset($url, $explodeUrl, $numberUrlPart, $controllerNameInUrl);
-
-		return $controllerName .= 'Controller';
 	}
 
 	//Метод формирования имени действия в контроллере
 	public function getActionName($url) {
-		//Разделяем ссылку
-		$explodeUrl = explode('/', $url);
-		//Считаем сколько частей в ссылке
-		$numberUrlPart = count($explodeUrl);
-		//Если последняя часть после слеша не пустая
-		if($explodeUrl[$numberUrlPart - 1] !== '') {
-		    $actionNameInUrl = $explodeUrl[$numberUrlPart - 1];
-		} else { //Если пустая
-			//Если часть ссылки перед послдним слешем не пустая
-			if($explodeUrl[$numberUrlPart - 2] !== '') {
-		    	$actionNameInUrl = $explodeUrl[$numberUrlPart - 2];
+		$dataType = gettype($url);
+		if(($dataType === 'string') && ($url !== '')) {
+			//Если в ссылке первый символ являетяс слешем
+			if(strpos($url, '/') === 0) {
+				//удаляем его
+				$url = mb_substr($url, 1);
+			}
+			//Разделяем ссылку
+			$explodeUrl = explode('/', $url);
+			//Считаем сколько частей в ссылке
+			$numberUrlPart = count($explodeUrl);
+			//Если последняя часть после слеша не пустая
+			if($explodeUrl[$numberUrlPart - 1] !== '') {
+				Maker::$app -> checkControllerActionName($explodeUrl[$numberUrlPart - 1]);
+			    $actionNameInUrl = $explodeUrl[$numberUrlPart - 1];
 			} else { //Если пустая
-				$explodeUrl = explode('/', Maker::$app -> configData['indexUrl']);
-				$numberUrlPart = count($explodeUrl);
-		    	$actionNameInUrl = $explodeUrl[$numberUrlPart - 1];
+				//Если часть ссылки перед послдним слешем не пустая
+				if($explodeUrl[$numberUrlPart - 2] !== '') {
+					Maker::$app -> checkControllerActionName($explodeUrl[$numberUrlPart - 2]);
+			    	$actionNameInUrl = $explodeUrl[$numberUrlPart - 2];
+				} else { //Если пустая
+					$explodeUrl = explode('/', Maker::$app -> configData['indexUrl']);
+					$numberUrlPart = count($explodeUrl);
+					Maker::$app -> checkControllerActionName($explodeUrl[$numberUrlPart - 1]);
+			    	$actionNameInUrl = $explodeUrl[$numberUrlPart - 1];
+				}
 			}
-		}
 
-		if(strpos($actionNameInUrl, '-') === false) {
-			$actionName = substr_replace($actionNameInUrl, strtoupper(mb_substr($actionNameInUrl, 0, 1)), 0, 1);
+			if(strpos($actionNameInUrl, '-') === false) {
+				$actionName = substr_replace($actionNameInUrl, strtoupper(mb_substr($actionNameInUrl, 0, 1)), 0, 1);
+			} else {
+				$explodeActionNameInUrl = explode('-', $actionNameInUrl);
+				$actionName = '';
+				foreach ($explodeActionNameInUrl as $partActionNameInUrl) {
+					$actionName .= substr_replace($partActionNameInUrl, strtoupper(mb_substr($partActionNameInUrl, 0, 1)), 0, 1);
+				}
+			}
+
+			unset($url, $explodeUrl, $numberUrlPart, $actionNameInUrl);
+
+			return $actionName = 'action'.$actionName;
 		} else {
-			$explodeActionNameInUrl = explode('-', $actionNameInUrl);
-			$actionName = '';
-			foreach ($explodeActionNameInUrl as $partActionNameInUrl) {
-				$actionName .= substr_replace($partActionNameInUrl, strtoupper(mb_substr($partActionNameInUrl, 0, 1)), 0, 1);
+			if($dataType !== 'string') {
+				Maker::$app -> error('В методе '.__METHOD__.' тип данных входного параметра не соответствует типу string');
+			}
+			if($url === '') {
+				Maker::$app -> error('В методе '.__METHOD__.' не указаны данные во входном параметре');
 			}
 		}
-
-		unset($url, $explodeUrl, $numberUrlPart, $actionNameInUrl);
-
-		return $actionName = 'action'.$actionName;
 	}
 
 	//Метод формирования ссылки для вида
 	public function getViewPuth($url, $viewName) {
-		//Разделяем ссылку
-		$explodeUrl = explode('/', $url);
-		//Считаем сколько частей в ссылке
-		$numberUrlPart = count($explodeUrl);
-		//Если последняя часть после слеша не пустая
-		if($explodeUrl[$numberUrlPart - 1] !== '') {
-		    $controllerNameInUrl = $explodeUrl[$numberUrlPart - 2];
-		} else { //Если пустая
-			//Если часть ссылки перед послдним слешем не пустая
-			if($explodeUrl[$numberUrlPart - 2] !== '') {
-				$controllerNameInUrl = $explodeUrl[$numberUrlPart - 3];
-			} else { //Если пустая
-				$explodeUrl = explode('/', Maker::$app -> configData['indexUrl']);
-				$numberUrlPart = count($explodeUrl);
-				$controllerNameInUrl = $explodeUrl[$numberUrlPart - 2];
+		$dataType1 = gettype($url);
+		$dataType2 = gettype($viewName);
+		if(($dataType1 === 'string') && ($dataType2 === 'string')
+			&& ($url !== '') && ($viewName !== '')) {
+			//Если в ссылке первый символ являетяс слешем
+			if(strpos($url, '/') === 0) {
+				//удаляем его
+				$url = mb_substr($url, 1);
 			}
-		}
+			//Разделяем ссылку
+			$explodeUrl = explode('/', $url);
+			//Считаем сколько частей в ссылке
+			$numberUrlPart = count($explodeUrl);
+			//Если последняя часть после слеша не пустая
+			if($explodeUrl[$numberUrlPart - 1] !== '') {
+				Maker::$app -> checkControllerActionName($explodeUrl[$numberUrlPart - 2]);
+			    $controllerNameInUrl = $explodeUrl[$numberUrlPart - 2];
+			} else { //Если пустая
+				//Если часть ссылки перед послдним слешем не пустая
+				if($explodeUrl[$numberUrlPart - 2] !== '') {
+					Maker::$app -> checkControllerActionName($explodeUrl[$numberUrlPart - 3]);
+					$controllerNameInUrl = $explodeUrl[$numberUrlPart - 3];
+				} else { //Если пустая
+					$explodeUrl = explode('/', Maker::$app -> configData['indexUrl']);
+					$numberUrlPart = count($explodeUrl);
+					Maker::$app -> checkControllerActionName($explodeUrl[$numberUrlPart - 2]);
+					$controllerNameInUrl = $explodeUrl[$numberUrlPart - 2];
+				}
+			}
 
-		$viewPuth = __DIR__.'/../../../views/'.strtolower($controllerNameInUrl).'/'.strtolower($viewName).'.php';
-		if(file_exists($viewPuth)) {
-			return $viewPuth;
+			$viewPuth = __DIR__.'/../../../views/'.strtolower($controllerNameInUrl).'/'.strtolower($viewName).'.php';
+			if(file_exists($viewPuth)) {
+				return $viewPuth;
+			} else {
+				Maker::$app -> error('Вид с указанным названием не найден. Проверенный путь: '.$viewPuth);
+			}
 		} else {
-			trigger_error('Вид с указанным названием не найден. Проверенный путь: '.$viewPuth.'||0');
+			if($dataType1 !== 'string') {
+				Maker::$app -> error('В методе '.__METHOD__.' тип данных первого входного параметра не соответствует типу string');
+			}
+			if($dataType2 !== string) {
+				Maker::$app -> error('В методе '.__METHOD__.' тип данных второго входного параметра не соответствует типу string');
+			}
+			if($url === '') {
+				Maker::$app -> error('В методе '.__METHOD__.' не указаны данные в первом входном параметре');
+			}
+			if($viewName === '') {
+				Maker::$app -> error('В методе '.__METHOD__.' не указаны данные во втором входном параметре');
+			}
 		}
 
 	}
@@ -140,7 +204,7 @@ class Converter
 	//Метод разделения ссылки на домен и путь
 	public function devideUrl($url) {
 		$type = gettype($url);
-		if(($type == 'string') && ($url != '')) {
+		if(($type === 'string') && ($url !== '')) {
 			//Если пользователь вставил в поле неполную ссылку
 			if(strpos($url, 'http') === false) {
 				//Если ссылка не состоит из нескольких частей
@@ -160,7 +224,12 @@ class Converter
 				return ['domain' => $parseUrl['host'], 'path' => $parseUrl['path']];
 			}
 		} else {
-			trigger_error('Указаные данные пусты или их тип не соответсвует требуемому||0');
+			if($type !== 'string') {
+				Maker::$app -> error('В методе '.__METHOD__.' тип данных входного параметра не соответствует типу string');
+			}
+			if($url === '') {
+				Maker::$app -> error('В методе '.__METHOD__.' не указаны данные во входном параметре');
+			}
 		}
 	}
 
@@ -190,7 +259,12 @@ class Converter
 			unset($type, $encodingLetters, $oneLineEncodingLetters);
 			return $url;
 		} else {
-		  	trigger_error('Указаные данные пусты или их тип не соответсвует требуемому||0');
+		  	if($type !== 'string') {
+				Maker::$app -> error('В методе '.__METHOD__.' тип данных входного параметра не соответствует типу string');
+			}
+			if($url === '') {
+				Maker::$app -> error('В методе '.__METHOD__.' не указаны данные во входном параметре');
+			}
 		}
 	}
 
@@ -220,7 +294,7 @@ class Converter
 						//идем проверять следующий вариант ссылки
 						continue;
 					} else {
-						trigger_error('Указанная ссылка недоступна');
+						Maker::$app -> error('Ссылка '.$url.' не доступна или не существует', 1);
 					}
 		        }
 		 		
@@ -235,12 +309,17 @@ class Converter
 		        } else {
 		        	//Если были проверены все варианты ссылки
 					if($i === 8) {
-						trigger_error('Указанная ссылка недоступна');
+						Maker::$app -> error('Ссылка '.$url.' не доступна или не существует', 1);
 					}
 				}
 		    }
 		} else {
-		    trigger_error('Указаные данные пусты или их тип не соответсвует требуемому||0');
+		    if($type !== 'string') {
+				Maker::$app -> error('В методе '.__METHOD__.' тип данных входного параметра не соответствует типу string');;
+			}
+			if($url === '') {
+				Maker::$app -> error('В методе '.__METHOD__.' не указаны данные во входном параметре');
+			}
 		}
 	}
 
@@ -272,7 +351,24 @@ class Converter
 	 		
 	 		return $devidedText;
 	 	} else {
-	 		trigger_error('Указаные данные пусты или их тип не соответсвует требуемому||0');
+	 		if($type1 !== 'string') {
+	 			Maker::$app -> error('В методе '.__METHOD__.' тип данных первого входного параметра не соответствует типу string');
+	 		}
+	 		if($type2 !== 'string') {
+	 			Maker::$app -> error('В методе '.__METHOD__.' тип данных второго входного параметра не соответствует типу string');
+	 		}
+	 		if($type3 !== 'string') {
+	 			Maker::$app -> error('В методе '.__METHOD__.' тип данных третьего входного параметра не соответствует типу string');
+	 		}
+	 		if($data === '') {
+	 			Maker::$app -> error('В методе '.__METHOD__.' не указаны данные в первом входном параметре');
+	 		}
+	 		if($inputSepatator === '') {
+	 			Maker::$app -> error('В методе '.__METHOD__.' не указаны данные во втором входном параметре');
+	 		}
+	 		if($outputSepatator === '') {
+	 			Maker::$app -> error('В методе '.__METHOD__.' не указаны данные в третьем входном параметре');
+	 		}
 	 	}
 	}
 
@@ -296,69 +392,94 @@ class Converter
 
 			return $data;
 		} else {
-			trigger_error('Указаные данные пусты или их тип не соответсвует требуемому||0');
+			if($type1 !== 'string') {
+	 			Maker::$app -> error('В методе '.__METHOD__.' тип данных первого входного параметра не соответствует типу string');
+	 		}
+	 		if($type2 !== 'array') {
+	 			Maker::$app -> error('В методе '.__METHOD__.' тип данных второго входного параметра не соответствует типу array');
+	 		}
+			if($data === '') {
+	 			Maker::$app -> error('В методе '.__METHOD__.' не указаны данные в первом входном параметре');
+	 		}
 		}
 	}
 
 	//Конвертирует внешние сылки в нужный нам вид, добавляя nofollow b target="_blanck"
 	public function convertExternalUrls($data, $cssClass)
     {
-	    $urlTags = '';
-	    //Получаем ссылки
-        $numberFindedUrlTags = preg_match_all("/&lt;a.*\/a&gt;/isU", $data, $urlTags);
-        if(($numberFindedUrlTags !== 0) && ($numberFindedUrlTags !== false)) {
-        	//Пробегаем все найденные ссылки
-        	for($j = 0; $j < $numberFindedUrlTags; $j++) {
-            	$codeWithUrl = '';
-	            $urlDescription = '';
-	            //Получаем саму ссылку из кода со ссылкой
-	            $findCodeUrlInUrlTags = preg_match("/href.*(&quot;|&#039;).*(&quot;|&#039;)/isU", $urlTags[0][$j], $codeWithUrl);
-	            //Получаем описание из ссылки
-	            $findDescriptionUrlInUrlTags = preg_match("/&gt;.*&lt;/isU", $urlTags[0][$j], $urlDescription);
-	            //Если нашли ссылки в кодах ссылок
-            	if(($findCodeUrlInUrlTags !== 0) 
-	                && ($findDescriptionUrlInUrlTags !== 0)
-	                && ($findCodeUrlInUrlTags !== false) 
-	                && ($findDescriptionUrlInUrlTags !== false)) {
-            		//Очищаем код со ссылкой
-		            $clearUrl = preg_replace("/href|=|&quot;|&#039;/isU", '', $codeWithUrl[0]);
-		        	//очищаем описание
-		            $clearDescription = preg_replace("/\/|&lt;|&gt;/isU", '', $urlDescription[0]);
-		            //Если было указано имя CSS класса, который нужно привязать ссылке
-	            	if($cssClass !== '') {
-	            		$cssClassCode = 'class=&quot;'.$cssClass.'&quot;';
-	            	} else {
-	            		$cssClassCode = '';
+    	$type1 = gettype($data);
+    	$type2 = gettype($cssClass);
+    	if(($type1 === 'string') && ($type2 === 'string') && ($data !== '')) {
+		    $urlTags = '';
+		    //Получаем ссылки
+	        $numberFindedUrlTags = preg_match_all("/&lt;a.*\/a&gt;/isU", $data, $urlTags);
+	        if(($numberFindedUrlTags !== 0) && ($numberFindedUrlTags !== false)) {
+	        	//Пробегаем все найденные ссылки
+	        	for($j = 0; $j < $numberFindedUrlTags; $j++) {
+	            	$codeWithUrl = '';
+		            $urlDescription = '';
+		            //Получаем саму ссылку из кода со ссылкой
+		            $findCodeUrlInUrlTags = preg_match("/href.*(&quot;|&#039;).*(&quot;|&#039;)/isU", $urlTags[0][$j], $codeWithUrl);
+		            //Получаем описание из ссылки
+		            $findDescriptionUrlInUrlTags = preg_match("/&gt;.*&lt;/isU", $urlTags[0][$j], $urlDescription);
+		            //Если нашли ссылки в кодах ссылок
+	            	if(($findCodeUrlInUrlTags !== 0) 
+		                && ($findDescriptionUrlInUrlTags !== 0)
+		                && ($findCodeUrlInUrlTags !== false) 
+		                && ($findDescriptionUrlInUrlTags !== false)) {
+	            		//Очищаем код со ссылкой
+			            $clearUrl = preg_replace("/href|=|&quot;|&#039;/isU", '', $codeWithUrl[0]);
+			        	//очищаем описание
+			            $clearDescription = preg_replace("/\/|&lt;|&gt;/isU", '', $urlDescription[0]);
+			            //Если было указано имя CSS класса, который нужно привязать ссылке
+		            	if($cssClass !== '') {
+		            		$cssClassCode = 'class=&quot;'.$cssClass.'&quot;';
+		            	} else {
+		            		$cssClassCode = '';
+		            	}
+		            	//Форимруем новый код ссылки
+	          			$newUrl = '&lt;a href=&quot;'.$clearUrl.'&quot; '.$cssClassCode.' target=&quot;_blanck&quot; rel=&quot;nofollow&quot;&gt;'.$clearDescription.'&lt;/a&gt;';
+	          			//Экранируем код со ссылкой, чтобы его можно использовать в регулярке далее
+		                $quoteUrlCode = preg_quote($urlTags[0][$j], '/');
+		                //Переделываем описание ссылки в нижний регистр
+		                $lowerClearDescription = mb_strtolower($clearDescription, 'UTF-8');
+		                //Есть нет указанного слова, знаичт скорее всего это сслыка не типа "читать далее"
+		                if(strpos($lowerClearDescription, 'читать') === false) {
+		                	//Заменяем старый код ссылки на новый
+		                	$data = preg_replace("/$quoteUrlCode/isU", $newUrl, $data);
+		            	} else {
+		            		//Заменяем ссылку на пустое
+		            		$data = preg_replace("/$quoteUrlCode/isU", '', $data);
+		            	}
 	            	}
-	            	//Форимруем новый код ссылки
-          			$newUrl = '&lt;a href=&quot;'.$clearUrl.'&quot; '.$cssClassCode.' target=&quot;_blanck&quot; rel=&quot;nofollow&quot;&gt;'.$clearDescription.'&lt;/a&gt;';
-          			//Экранируем код со ссылкой, чтобы его можно использовать в регулярке далее
-	                $quoteUrlCode = preg_quote($urlTags[0][$j], '/');
-	                //Переделываем описание ссылки в нижний регистр
-	                $lowerClearDescription = mb_strtolower($clearDescription, 'UTF-8');
-	                //Есть нет указанного слова, знаичт скорее всего это сслыка не типа "читать далее"
-	                if(strpos($lowerClearDescription, 'читать') === false) {
-	                	//Заменяем старый код ссылки на новый
-	                	$data = preg_replace("/$quoteUrlCode/isU", $newUrl, $data);
-	            	} else {
-	            		//Заменяем ссылку на пустое
-	            		$data = preg_replace("/$quoteUrlCode/isU", '', $data);
-	            	}
-            	}
-        	}
-        	unset($cssClass, $urlTags, $numberFindedUrlTags, $j, $codeWithUrl, $urlDescription, $findCodeUrlInUrlTags);
-        	unset($findDescriptionUrlInUrlTags, $clearUrl, $clearDescription, $cssClassCode, $newUrl, $quoteUrlCode);
+	        	}
+	        	unset($cssClass, $urlTags, $numberFindedUrlTags, $j, $codeWithUrl, $urlDescription, $findCodeUrlInUrlTags);
+	        	unset($findDescriptionUrlInUrlTags, $clearUrl, $clearDescription, $cssClassCode, $newUrl, $quoteUrlCode);
 
-        	return $data;
-        } else { //Если ссылок не налось или произошла ошибка
-        	if($numberFindedUrlTags === false) {
-        		trigger_error('Произошла ошибка при поиске ссылки||0');
-        	} else { //Если не произошла ошибка
-        		unset($cssClass, $urlTags, $numberFindedUrlTags);
+	        	return $data;
+	        } else { //Если ссылок не налось или произошла ошибка
+	        	if($numberFindedUrlTags === false) {
+	        		Maker::$app -> error('Произошла ошибка при поиске в обрабатывемом тексте кодов ссылок');
+	        	} else { //Если не произошла ошибка
+	        		unset($cssClass, $urlTags, $numberFindedUrlTags);
 
-        		return $data;
-        	}
-        }
+	        		return $data;
+	        	}
+	        }
+	    } else {
+	    	if($type1 !== 'string') {
+	    		Maker::$app -> error('В методе '.__METHOD__.' тип данных первого входного параметра не соответствует типу string');
+	    	}
+	    	if($type2 !== 'string') {
+	    		Maker::$app -> error('В методе '.__METHOD__.' тип данных второго входного параметра не соответствует типу string');
+	    	}
+	    	if($data === '') {
+	    		Maker::$app -> error('В методе '.__METHOD__.' не указаны данные в первом входном параметре');
+	    	}
+	    	if($cssClass === '') {
+	    		Maker::$app -> error('В методе '.__METHOD__.' не указаны данные во втором входном параметре');
+	    	}
+	    }
     }
 
 }

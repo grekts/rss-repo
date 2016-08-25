@@ -15,11 +15,11 @@ class Router {
 			//Получаем  из ссылки имя контроллера и вызываемого действия
 			$controllerName = Maker::$app -> getControllerName($url);
 			$actionName = Maker::$app -> getActionName($url);
-			if(file_exists('../controllers/'.$controllerName.'.php')) {
+			if(file_exists(__DIR__.'/../../../controllers/'.$controllerName.'.php')) {
 				$contorllerPuth = '\controllers\\'.$controllerName;
 				$contorllerPuth::$actionName();
 			} else {
-				trigger_error('Запрашиваемый файл контроллера не найден||0'.$url.'|'.$controllerName);
+				Maker::$app -> error('Файл контроллера '.$url.'|'.$controllerName.' не найден');
 			}
 		}
 	}
@@ -42,7 +42,18 @@ class Router {
 			$linkToView = Maker::$app -> getViewPuth($url, $viewName);
 			return require_once($linkToView);
 		} else {
-			trigger_error('Имя вида и параметры не указаны или имеют неверный тип||0');
+			if($dataType1 !== 'string') {
+				Maker::$app -> error('В методе '.__METHOD__.' тип данных первого входного параметра не соответствует типу string');
+			}
+			if($dataType2 !== 'array') {
+				Maker::$app -> error('В методе '.__METHOD__.' тип данных второго входного параметра не соответствует типу array');
+			}
+			if($viewName === '') {
+				Maker::$app -> error('В методе '.__METHOD__.' не указаны данные в первом входном параметре');
+			}
+			if($vars === []) {
+				Maker::$app -> error('В методе '.__METHOD__.' не указаны данные во втором входном параметре');
+			}
 		}
 	}
 

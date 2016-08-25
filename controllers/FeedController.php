@@ -31,19 +31,20 @@ class FeedController
 
                     echo 'Фид сохранен';
 	 			} else {
-	 				trigger_error('Указанные RSS фид уже находится в системе');
+                    Maker::$app -> error('Указанные RSS фид уже находится в системе', 1);
 	 			}
 	 		} else {
-	 			trigger_error('Указанные данные не являются ссылкой');
+                Maker::$app -> error('Указанные данные не являются ссылкой', 1);
 	 		}
 	 	} else {
-	 		trigger_error('Не указана ссылка на RSS ленту');
+            Maker::$app -> error('Не указана ссылка на RSS ленту', 1);
 	 	}
 	}
 
     //Метод удаление фида
 	public static function actionDelete() {
-        if((isset($_POST['feedId'])) && ($_POST['feedId'] !== '')) {
+        $dataType = gettype($_POST['feedId']);
+        if((isset($_POST['feedId'])) && ($_POST['feedId'] !== '') && ($dataType === 'string')) {
             //Фильтруем входные данные
             $feedId = Maker::$app -> filter($_POST['feedId']);
             //Делаем запрос на удаление фида из БД
@@ -51,7 +52,12 @@ class FeedController
 
             echo 'RSS лента удалена';
         } else {
-            trigger_error('Не установлен или пустой идентификатор фида||0');
+            if($dataType !== 'string') {
+                Maker::$app -> error('В методе '.__METHOD__.' тип id фида не является string');
+            }
+            if(($_POST['feedId'] === '') || (isset($_POST['feedId']) === false)) {
+                Maker::$app -> error('В методе '.__METHOD__.' не определен id фида');
+            }
         }
     }
 

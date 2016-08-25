@@ -30,8 +30,8 @@ class DbWorker
 	    $dataType2 = gettype($this->dbUserName);
 	    $dataType3 = gettype($this->dbPass);
 	    $dataType4 = gettype($this->dbName);
-	    if(($dataType1 == 'string') && ($dataType2 == 'string') && ($dataType3 == 'string') 
-	      && ($dataType4 == 'string') && ($this->dbHost != '') && ($this->dbUserName != '') && ($this->dbName != '')) {
+	    if(($dataType1 === 'string') && ($dataType2 === 'string') && ($dataType3 === 'string') 
+	      && ($dataType4 === 'string') && ($this->dbHost !== '') && ($this->dbUserName !== '') && ($this->dbName !== '')) {
 	      	try{
 	        	$dsn = "mysql:host=".$this->dbHost.";dbname=".$this->dbName.";charset=utf8mb4";
 	        	$this->connectId = new \PDO($dsn, $this->dbUserName, $this->dbPass);
@@ -40,10 +40,30 @@ class DbWorker
 
 	        	unset($dataType1, $dataType2, $dataType3, $dataType4, $dsn);
 	      	} catch (PDOException $e) {
-	        	trigger_error('Произошла ошибка пр подключению к БД||0');
+	        	Maker::$app -> error('В методе '.__METHOD__.' произошла ошибка при подключении к БД');
 	      	}
 	    } else {
-	      trigger_error('Указаны не все данные для подключения к БД или они указаны неверно||0');
+	      	if($dataType1 !== 'string') {
+	      		Maker::$app -> error('Тип свойства dbHost параметра db, указанного в конфигурационном файле, не соответсвует типу string');
+	      	}
+	      	if($dataType2 !== 'string') {
+	      		Maker::$app -> error('Тип свойства dbUserName параметра db, указанного в конфигурационном файле, не соответсвует типу string');
+	      	}
+	      	if($dataType3 !== 'string') {
+	      		Maker::$app -> error('Тип свойства dbPass параметра db, указанного в конфигурационном файле, не соответсвует типу string');
+	      	}
+	      	if($dataType4 !== 'string') {
+	      		Maker::$app -> error('Тип свойства dbName параметра db, указанного в конфигурационном файле, не соответсвует типу string');
+	      	}
+	      	if($this->dbHost === '') {
+	      		Maker::$app -> error('В конфигурационном файле не указано свойство dbHost параметра db');
+	      	}
+	      	if($this->dbUserName === '') {
+	      		Maker::$app -> error('В конфигурационном файле не указано свойство dbUserName параметра db');
+	      	}
+	      	if($this->dbName === '') {
+	      		Maker::$app -> error('В конфигурационном файле не указано свойство dbName параметра db');
+	      	}
 	    }
 	}
 
@@ -57,13 +77,13 @@ class DbWorker
 				//Делаем запрос
 				$execResult = $this->connectId->exec($query);
 				if($execResult === false) {
-					trigger_error('Ошибка запроса к базе данных||0');
+					Maker::$app -> error('В методе '.__METHOD__.' ошибка запроса к базе данных');
 				}
 			} else { //Если запрос не на создание страницы
 				//Подготавливаем запрос
 				$prepareQuery = $this->connectId->prepare($query);
 				if($prepareQuery === false) {
-					trigger_error('Ошибка подготовки запроса к базе данных||0');
+					Maker::$app -> error('В методе '.__METHOD__.' ошибка подготовки запроса к базе данных');
 				}
 				//Считаем переменные, коотрые нужно вставить в запрос
 				$numberVars = count($vars);
@@ -86,14 +106,14 @@ class DbWorker
 				//Выполняем запрос
 				$executeResult = $prepareQuery->execute();
 				if($executeResult === false) {
-					trigger_error('Ошибка запуска подготовленного запроса к базе данных||0');
+					Maker::$app -> error('В методе '.__METHOD__.' ошибка запуска подготовленного запроса к базе данных');
 				}
 				//Если запрос Select
 				if(strpos($query, 'SELECT') !== false) {
 					//Получаем данные
 					$dataFromDb = $prepareQuery->fetchAll(\PDO::FETCH_ASSOC);
 					if($dataFromDb === false) {
-						trigger_error('ошибка запроса к базе данных||0');
+						Maker::$app -> error('В методе '.__METHOD__.' ошибка запроса к базе данных');
 					}
 
 					unset($query, $vars, $prepareQuery, $numberVars, $i, $varType, $pdoDataType, $executeResult, $execResult);
@@ -104,7 +124,15 @@ class DbWorker
 				unset($query, $vars, $prepareQuery, $numberVars, $i, $varType, $pdoDataType, $executeResult, $execResult);
 			}
 		} else {
-			trigger_error('Неверно указаны входные данные||0');
+			if($dataType1 !== 'string') {
+				Maker::$app -> error('В методе '.__METHOD__.' тип данных первого входного параметра не соответствует типу string');
+			}
+			if($dataType2 !== 'array') {
+				Maker::$app -> error('В методе '.__METHOD__.' тип данных второго входного параметра не соответствует типу array');
+			}
+			if($query === '') {
+				Maker::$app -> error('В методе '.__METHOD__.' не указаны данные в первом входном параметре');
+			}
 		}
 	}
 }

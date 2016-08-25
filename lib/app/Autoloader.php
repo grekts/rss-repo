@@ -10,15 +10,20 @@ class Autoloader
         $dataType = gettype($className);
         if(($dataType == 'string') && ($className !== '')) {
             $classNameWithReplaceSlash = str_replace('\\', '/', $className);
-            $existFileWithUrl = file_exists('../'.$classNameWithReplaceSlash.'.php');
+            $existFileWithUrl = file_exists(__DIR__.'/../../'.$classNameWithReplaceSlash.'.php');
             if($existFileWithUrl) {
-                require_once('../'.$classNameWithReplaceSlash.'.php'); 
+                require_once(__DIR__.'/../../'.$classNameWithReplaceSlash.'.php'); 
             } else {
-                trigger_error('Файла класса не существует||0');
+                Maker::$app -> error('В методе '.__METHOD__.' указан не существующий файл класса');
             }
             clearstatcache();
         } else {
-            trigger_error('Пришедшие данные не соответствуют требуемому типу или пустые||0');
+            if($dataType !== 'string') {
+                Maker::$app -> error('В методе '.__METHOD__.' тип данных входного параметра не соответствует типу string');
+            }
+            if($className === '') {
+                Maker::$app -> error('В методе '.__METHOD__.' не указаны данные во входном параметре');
+            }
         }
     }
 }

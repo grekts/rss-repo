@@ -13,10 +13,10 @@ return [
 		'/' => 'site/index'
 	],
 
-	'indexUrl' => 'Site/Index',
+	'indexUrl' => 'site/index',
 	'separator' => '||',
 
 	'debug' => 'Off',
-	'techMessage' => '||0'
+	'userMessage' => '||0'
 
 ];

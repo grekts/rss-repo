@@ -10,29 +10,53 @@ class PageGenerator
 
 	//Метд рендеринга
 	public function render($viewName, $vars) {
-		//Выводим теги, коотрые указал пользователь
-		$tagsList = $this -> outTags();
-		//Формируем переменные, котоыре будут выводиться в шаблоне
-		$htmlTag = $tagsList['htmlTagCode'];
-		$headTags = $tagsList['headTagsCode'];
-		$scriptTags = $tagsList['scriptTags'];
+		$dataType1 = gettype($viewName);
+		$dataType2 = gettype($vars);
+		if(($dataType1 === 'string') && ($dataType2 === 'array') && ($viewName !== '')) {
+			//Выводим теги, коотрые указал пользователь
+			$tagsList = $this -> outTags();
+			//Формируем переменные, котоыре будут выводиться в шаблоне
+			$htmlTag = $tagsList['htmlTagCode'];
+			$headTags = $tagsList['headTagsCode'];
+			$scriptTags = $tagsList['scriptTags'];
 
-		ob_start();
-		//Подключаем вид
-		Maker::$app -> routingToView($viewName, $vars);
-		//Формируем переменную с котдом вида, которая будет выводиться в шаблоне
-		$content = ob_get_clean();
-		//Подключаем шаблон
-		if(file_exists(__DIR__.'/../../../views/layouts/main.php')) {
-			require_once(__DIR__.'/../../../views/layouts/main.php');
+			ob_start();
+			//Подключаем вид
+			Maker::$app -> routingToView($viewName, $vars);
+			//Формируем переменную с котдом вида, которая будет выводиться в шаблоне
+			$content = ob_get_clean();
+			//Подключаем шаблон
+			if(file_exists(__DIR__.'/../../../views/layouts/main.php')) {
+				require_once(__DIR__.'/../../../views/layouts/main.php');
+			} else {
+				Maker::$app -> error('Не найден файл шаблона main.php');
+			}
 		} else {
-			trigger_error('Шаблон не поключен или имеет имя не main.php||0');
+			if($dataType1 !== 'string') {
+				Maker::$app -> error('В методе '.__METHOD__.' тип данных первого входного параметра не соответствует типу string');
+			}
+			if($dataType2 !== 'array') {
+				Maker::$app -> error('В методе '.__METHOD__.' тип данных второго входного параметра не соответствует типу array');
+			}
+			if($viewName === '') {
+				Maker::$app -> error('В методе '.__METHOD__.' не указаны данные в первом входном параметре');
+			}
 		}
 	}
 
 	public function tagRegistration($tags) {
-		//Сохраняем ассив с описанием html тегов
-		self::$tagBuffer[] = $tags;
+		$datatype = gettype($tags);
+		if(($datatype === 'array') && ($tags !== [])) {
+			//Сохраняем ассив с описанием html тегов
+			self::$tagBuffer[] = $tags;
+		} else {
+			if($dataType !== 'array') {
+				Maker::$app -> error('В методе '.__METHOD__.' тип данных входного параметра не соответствует типу array');
+			}
+			if($tags === []) {
+				Maker::$app -> error('В методе '.__METHOD__.' не указаны данные во входном параметре');
+			}
+		}
 	}
 
 	//Метод формирование тегов в head
