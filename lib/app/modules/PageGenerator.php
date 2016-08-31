@@ -3,28 +3,35 @@
 namespace lib\app\modules;
 
 use \lib\app\Maker;
+use \lib\app\modules\Registrator;
 
 class PageGenerator
 {
-	public static $tagBuffer = [];
-
 	//Метд рендеринга
 	public function render($viewName, $vars) {
 		$dataType1 = gettype($viewName);
 		$dataType2 = gettype($vars);
 		if(($dataType1 === 'string') && ($dataType2 === 'array') && ($viewName !== '')) {
+			//Формируем блоки кодов зарегистрированных виджетов
+			$widgetsCode = $this -> formingWidgets();
+
+			//Формируем переменные, которые будут содержать кода виджетов
+			foreach ($widgetsCode as $widgetsName => $widgetCode) {
+				$$widgetsName = $widgetCode;
+			}
+
+			$widgetsNames = array_keys($widgetsCode);
+
 			//Выводим теги, коотрые указал пользователь
-			$tagsList = $this -> outTags();
+			$tagsList = $this -> formingTags($widgetsNames);
 			//Формируем переменные, котоыре будут выводиться в шаблоне
 			$htmlTag = $tagsList['htmlTagCode'];
 			$headTags = $tagsList['headTagsCode'];
 			$scriptTags = $tagsList['scriptTags'];
 
-			ob_start();
 			//Подключаем вид
-			Maker::$app -> routingToView($viewName, $vars);
+			$content = Maker::$app -> routingToView($viewName, $vars);
 			//Формируем переменную с котдом вида, которая будет выводиться в шаблоне
-			$content = ob_get_clean();
 			//Подключаем шаблон
 			if(file_exists(__DIR__.'/../../../views/layouts/main.php')) {
 				require_once(__DIR__.'/../../../views/layouts/main.php');
@@ -44,30 +51,16 @@ class PageGenerator
 		}
 	}
 
-	public function tagRegistration($tags) {
-		$datatype = gettype($tags);
-		if(($datatype === 'array') && ($tags !== [])) {
-			//Сохраняем ассив с описанием html тегов
-			self::$tagBuffer[] = $tags;
-		} else {
-			if($dataType !== 'array') {
-				Maker::$app -> error('В методе '.__METHOD__.' тип данных входного параметра не соответствует типу array');
-			}
-			if($tags === []) {
-				Maker::$app -> error('В методе '.__METHOD__.' не указаны данные во входном параметре');
-			}
-		}
-	}
-
 	//Метод формирование тегов в head
-	public function outTags() {
+	public function formingTags($widgetsNames = '') {
+		ob_start();
 		$headTagsCode = '';
 		$htmlTag = '';
 		$scriptTags = '';
 		//Если пользователь установил HTML теги для вывода
-		if(self::$tagBuffer !== []) {
-			$tags = self::$tagBuffer[0];
-			self::$tagBuffer = null;
+		if(Registrator::$tagBuffer !== []) {
+			$tags = Registrator::$tagBuffer[0];
+			Registrator::$tagBuffer = null;
 			//Получаем именя тегов
 			$tagsNames = array_keys($tags);
 			//Если в списке нет обязательного тега title
@@ -144,6 +137,20 @@ class PageGenerator
 						break;
 				}
 			}
+
+			//Если пришли имена подключенных виджетов, т.е. какие-то виджеты были подключены к странице
+			if($widgetsNames !== '') {
+				foreach ($widgetsNames as $widgetName) {
+					if(file_exists('../lib/app/widgets/'.$widgetName.'/css/'.$widgetName.'.css') === true) {
+						$headTagsCode .= '	<link rel="stylesheet" href="lib/app/widgets/'.$widgetName.'/css/'.$widgetName.'.css">'."\r\n";
+					}
+
+					if(file_exists('../lib/app/widgets/'.$widgetName.'/scripts/'.$widgetName.'.js') === true) {
+						$scriptTags .= '	<script type="text/javascript" src="lib/app/widgets/'.$widgetName.'/scripts/'.$widgetName.'.js"></script>'."\r\n";
+					}
+				}
+			}
+
 			unset($tags, $tagsNames);
 
 			return ['htmlTagCode' => $htmlTag, 'headTagsCode' => $headTagsCode, 'scriptTags' => $scriptTags];
@@ -154,7 +161,98 @@ class PageGenerator
 	<meta name="description" content="Описание страницы">
 	<link rel="stylesheet" href="">'];
 		}
-		
+	}
+
+	//Метод формирование тегов в head
+	public function formingWidgets() {
+		$widgetsCode = [];
+		//Если были зарегистрированы виджеты
+		if(Registrator::$widgetBuffer !== []) {
+			//Сохраняем данные зарегистрированных виджетов
+			$widgetsData = Registrator::$widgetBuffer[0];
+			//Обнуляем буфер с данными виджетов
+			Registrator::$widgetBuffer = null;
+			//Получаем имена зарегистрированных виджетов
+			$widgetsNames = array_keys($widgetsData);
+			//Пробегаем все зарегистрированные виджеты
+			foreach ($widgetsNames as $widgetName) {
+				//Если существует дирректория с зарегистрированным виджетом
+				if(is_dir(__DIR__.'/../widgets/'.$widgetName) === true) {
+					//Если у зарегистрированнного виджета есть папака с видом
+					if(is_dir(__DIR__.'/../widgets/'.$widgetName.'/views') === true) {
+						//Если у виджета есть файл с его конфигурацией
+						if(file_exists(__DIR__.'/../widgets/'.$widgetName.'/config/config.php') === true) {
+							//Получаем конфигурационный файл виджета
+							$widgetConfigParams = require_once(__DIR__.'/../widgets/'.$widgetName.'/config/config.php');
+							//Получаем имена параметров, которые обязательны должны быть описаны для виджета
+							$paramsNames = array_keys($widgetConfigParams);
+
+							//Получаем имена свойств, описанных у виджета
+							$widgetWroteParams = array_keys($widgetsData[$widgetName]);
+							//Пробегаем все обязательыне параметры виджета из конфига
+							foreach ($paramsNames as $paramName) {
+								//Если в массиве с параметрами, которыми описали зарегистрированный виджет, нет текущего проверяемого параметра
+								if(in_array($paramName, $widgetWroteParams) === false) {
+									Maker::$app -> error('При регистрации виджета не описан обязательный параметр '.$paramName);
+								} else { //Если параметр есть
+									//Получаем тип данных, который должен быть у текущего проверяемого обязательного параметра
+									$typeValue = $widgetConfigParams[$paramName]['type'];
+									//Если в описании виджета проверяемый параметр имеет нужный тип данных
+									if(gettype($widgetsData[$widgetName][$paramName]) === $typeValue) {
+										//Получаем из конфига информацию о том, может ли быть параметр виджета пустым
+										$emptyValue = $widgetConfigParams[$paramName]['empty'];
+										//Если не может
+										if($emptyValue === 'no') {
+											//Исходя из типа данных параметра проверяем его на пустоту
+											switch ($typeValue) {
+												case 'array':
+													if($widgetsData[$widgetName][$paramName] === []) {
+														Maker::$app -> error('При регистрации виджета не указаны значения обязательного параметра '.$paramName);
+													}
+													break;
+												
+												case 'string':
+													if($widgetsData[$widgetName][$paramName] === '') {
+														Maker::$app -> error('При регистрации виджета не указаны значения обязательного параметра '.$paramName);
+													}
+													break;
+											}
+										}
+									} else {
+										Maker::$app -> error('При регистрации виджета был неверно описанан обязательный параметр '.$paramName);
+									}
+								}
+							}
+						} else {
+							Maker::$app -> error('У виджета '.$widgetName.' отсутсвует конфигурационный файл');
+						}
+
+						//Переделываем свойства описанных параметров виджета в переменные и их знаечния
+						foreach ($widgetsData[$widgetName] as $widgetParameter => $parameterValue) {
+							if(isset($$widgetParameter) === false) {
+								$$widgetParameter = $parameterValue;
+							} else {
+								Maker::$app -> error('Параметр виджета, имеюющий имя '.$widgetParameter.' уже существует');
+							}
+						}
+						ob_start();
+						//Подключаемвид виджета, вставляя туда значения параметров
+						require_once(__DIR__.'/../widgets/'.$widgetName.'/views/'.$widgetName.'.php');
+						$widgetCode = ob_get_clean();
+
+						$widgetsCode[$widgetName] = $widgetCode;
+					} else {
+						Maker::$app -> error('У виджета '.$widgetName.' отсутствуют виды');
+					}
+				} else {
+					Maker::$app -> error('Не найден виджет '.$widgetName);
+				}
+			}
+			//Возвращаем массив с кодами виджетов
+			return $widgetsCode;
+		} else {
+			Maker::$app -> error('Не определены виджеты и их параметры');
+		}
 	}
 
 }

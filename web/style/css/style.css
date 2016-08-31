@@ -1,9 +1,6 @@
 .not-display {
   display: none; }
 
-.cursor-pointer {
-  cursor: pointer; }
-
 * {
   margin: 0px;
   padding: 0px;
@@ -18,10 +15,6 @@ body {
   position: relative;
   height: 100%;
   background-color: #d8d8d8; }
-
-.inline-block {
-  display: inline-block;
-  vertical-align: top; }
 
 .pos-relative {
   position: relative; }
@@ -115,54 +108,6 @@ body {
   font-weight: bold;
   color: #999999;
   text-decoration: none; }
-
-.main-menu {
-  margin-top: 19px; }
-  @media screen and (max-width: 760px) {
-    .main-menu {
-      margin-top: 70px;
-      display: none; } }
-
-.element-main-menu {
-  display: inline;
-  margin-right: 38px; }
-
-.menu-text {
-  font-size: 16px;
-  color: #0088cc;
-  text-decoration: none; }
-
-.field-tape-url {
-  position: absolute;
-  top: 12px;
-  right: 135px;
-  width: 200px;
-  height: 21px;
-  border: 1px solid #b1b1b1;
-  font-size: 15px;
-  color: #bcbcbc;
-  padding: 3px 5px 2px 5px;
-  background-color: #eeeeee; }
-  @media screen and (max-width: 760px) {
-    .field-tape-url {
-      top: 25px;
-      left: 15px;
-      display: none; } }
-
-.send-tape-url {
-  position: absolute;
-  top: 12px;
-  right: 15px;
-  width: 100px;
-  height: 27px;
-  font-size: 12px;
-  border: 1px solid #b1b1b1;
-  background-color: #eeeeee; }
-  @media screen and (max-width: 760px) {
-    .send-tape-url {
-      top: 25px;
-      left: 240px;
-      display: none; } }
 
 .main-menu-button {
   position: absolute;

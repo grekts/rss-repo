@@ -1,12 +1,9 @@
-$('.send-tape-url').click(sendFeedToDb);
 $('[id ^= title]').click(showDescription);
 $('[id ^= description]').click(showDescription);
 $('[id ^= title]').click(setReadNews);
 $('[id ^= description]').click(setReadNews);
 $('[id ^= date]').click(setReadNews);
 $('.folder').click(setReadNews);
-$('.field-tape-url').click(setFocusOnInput);
-$('.field-tape-url').blur(blurOutofInput);
 $('.folder').click(sendNewsToArchive);
 $('[id ^= img-bucket-news]').click(deleteNewsFromArchive);
 $('[id ^= img-bucket-feed]').click(deleteFeed);
@@ -26,42 +23,6 @@ function showDescription() {
 		descriptionBlock.hide();
 		$('#row-' + splitTitleId[1]).css('border-bottom', '1px solid #999999');
 	}
-}
-
-function setFocusOnInput() {
-	$inputField = $('.field-tape-url');
-	if($inputField.val() === 'Ссылка на RSS ленту') {
-	    $inputField.val('');
-	    $inputField.css("color", '#000000')
-	}
-}
-
-function blurOutofInput() {
-	$inputField = $('.field-tape-url');
-	if($inputField.val() === '') {
-	    $inputField.val('Ссылка на RSS ленту');
-	    $inputField.css("color", '#bcbcbc')
-	}
-}
-
-function sendFeedToDb() {
-	feedUrl = $('.field-tape-url').val();
-	$.ajax({
-    	type: "POST",
-    	url: "save-feed",
-    	data: {feedUrl:feedUrl},
-    	dataType: "text",
-    	success: function(data) {
-          if(data.indexOf('error|') === 0) {
-              dataSplit = data.split('|');
-              alert(dataSplit[1]);
-          } else {
-             alert(data);
-             url = "/";
-             $(location).attr('href',url);
-          }
-    	}
-  	});
 }
 
 function setReadNews() {

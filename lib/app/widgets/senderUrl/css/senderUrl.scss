@@ -1,0 +1,39 @@
+.field-write-text{
+	position: absolute;
+	top: 12px;
+	right: 135px;
+	width: 200px;
+	height: 21px;
+	border: 1px solid rgb(177, 177, 177);
+	font-size: 15px;
+	color: rgb(188, 188, 188);
+	padding: 3px 5px 2px 5px;
+	background-color: rgb(238, 238, 238);
+
+	@media screen and (max-width: 760px) {
+		top: 25px;
+		left: 15px;
+		display: none;
+  	}
+}
+
+.button-send-data{
+	position: absolute;
+	top: 12px;
+	right: 15px;
+	width: 100px;
+	height: 27px;
+	font-size: 12px;
+	border: 1px solid rgb(177, 177, 177);
+	background-color: rgb(238, 238, 238);
+
+	@media screen and (max-width: 760px) {
+		top: 25px;
+		left: 240px;
+		display: none;
+  	}
+}
+
+.cursor-pointer{
+	cursor: pointer;
+}

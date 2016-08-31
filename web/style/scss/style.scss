@@ -16,10 +16,6 @@ $max-width-media-2: 760px;
 	display: none;
 }
 
-.cursor-pointer{
-	cursor: pointer;
-}
-
 *{
   margin: 0px;
   padding: 0px;
@@ -37,11 +33,6 @@ body {
 	position: relative;
 	height: 100%;
 	background-color: rgb(216, 216, 216);
-}
-
-.inline-block{
-	display: inline-block;
-	vertical-align: top;
 }
 
 .pos-relative{

@@ -3,8 +3,8 @@
 return [
 
 	'db' => [
-		'dbName' => 'rssdatabase',
-		'dbUserName' => 'rssbatabaseuser',
+		'dbName' => '',
+		'dbUserName' => '',
 		'dbPass' => '',
 		'dbHost' => 'localhost'
 	],
@@ -13,7 +13,6 @@ return [
 		'/' => 'site/index',
 		'/archive' => 'site/archive',
 		'/feed-list' => 'site/feed-list',
-		'/save-feed' => 'feed/save',
 		'/set-read' => 'news/set-read',
 		'/news-to-archive' => 'news/send-to-archive',
 		'/delete-from-archive' => 'news/delete-from-archive',
@@ -22,5 +21,4 @@ return [
 
 	'indexUrl' => 'site/index',
 	'separator' => '|!|'
-
 ];

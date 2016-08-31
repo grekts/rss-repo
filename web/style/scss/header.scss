@@ -20,62 +20,6 @@
 	text-decoration: none;
 }
 
-.main-menu{
-	margin-top: 19px;
-
-	@media screen and (max-width: $max-width-media-2) {
-		margin-top: 70px;
-		display: none;
-	}
-}
-
-.element-main-menu{
-	display: inline;
-	margin-right: 38px;
-}
-
-.menu-text{
-	font-size: 16px;
-	color: rgb(0, 136, 204);
-	text-decoration: none;
-}
-
-.field-tape-url{
-	position: absolute;
-	top: 12px;
-	right: 135px;
-	width: 200px;
-	height: 21px;
-	border: 1px solid rgb(177, 177, 177);
-	font-size: 15px;
-	color: rgb(188, 188, 188);
-	padding: 3px 5px 2px 5px;
-	background-color: rgb(238, 238, 238);
-
-	@media screen and (max-width: $max-width-media-2) {
-		top: 25px;
-		left: 15px;
-		display: none;
-  	}
-}
-
-.send-tape-url{
-	position: absolute;
-	top: 12px;
-	right: 15px;
-	width: 100px;
-	height: 27px;
-	font-size: 12px;
-	border: 1px solid rgb(177, 177, 177);
-	background-color: rgb(238, 238, 238);
-
-	@media screen and (max-width: $max-width-media-2) {
-		top: 25px;
-		left: 240px;
-		display: none;
-  	}
-}
-
 .main-menu-button{
 	position: absolute;
 	width: 40px;

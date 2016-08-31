@@ -15,18 +15,10 @@ use \lib\app\Maker;
 			    	<a href="/" class="logo">RSS</a>
 			    </div>
 			    <div class="cols-5 cols-6 inline-block">
-			    	<ul class="main-menu inline-block">
-			    		<li class="element-main-menu">
-			    		    <a href="feed-list" class="menu-text">Список лент</a>
-			    		</li>
-			    		<li class="element-main-menu">
-			    		    <a href="archive" class="menu-text">Архив</a>
-			    		</li>
-			    	</ul>
+			    	<?= $menu; ?>
 			    </div>
 			    <div class="cols-5 cols-6 pos-relative inline-block">
-			    	<input type="text" class="field-tape-url" value="Ссылка на RSS ленту">
-			    	<button class="send-tape-url cursor-pointer">Добавить</button>
+			    	<?=  $senderUrl; ?> 
 			    </div>
 			    <div class="main-menu-button not-display cursor-pointer">≡</div>
 			</div>

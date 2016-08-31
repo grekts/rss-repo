@@ -34,6 +34,7 @@ class Converter
 
 	//Метод формирования имени контроллера
 	public function getControllerName($url) {
+
 		$dataType = gettype($url);
 		if(($dataType === 'string') && ($url !== '')) {
 			//Если в ссылке первый символ являетяс слешем
@@ -136,6 +137,69 @@ class Converter
 			unset($url, $explodeUrl, $numberUrlPart, $actionNameInUrl);
 
 			return $actionName = 'action'.$actionName;
+		} else {
+			if($dataType !== 'string') {
+				Maker::$app -> error('В методе '.__METHOD__.' тип данных входного параметра не соответствует типу string');
+			}
+			if($url === '') {
+				Maker::$app -> error('В методе '.__METHOD__.' не указаны данные во входном параметре');
+			}
+		}
+	}
+
+	//Метод формирования имени виджета
+	public function getWidgetName($url) {
+
+		$dataType = gettype($url);
+		if(($dataType === 'string') && ($url !== '')) {
+			//Если в ссылке первый символ являетяс слешем
+			if(strpos($url, '/') === 0) {
+				//удаляем его
+				$url = mb_substr($url, 1);
+			}
+			$widgetName = '';
+			//Разделяем ссылку
+			$explodeUrl = explode('/', $url);
+			//Считаем сколько частей в ссылке
+			$numberUrlPart = count($explodeUrl);
+			//Если последняя часть после слеша не пустая
+			if($explodeUrl[$numberUrlPart - 1] !== '') {
+			    //проверяем правильность формата имени контроллера
+				Maker::$app -> checkControllerActionName($explodeUrl[$numberUrlPart - 2]);
+			    $widgetNameInUrl = $explodeUrl[$numberUrlPart - 2];
+			   
+			} else { //Если пустая
+				//Если часть ссылки перед послдним слешем не пустая
+				if($explodeUrl[$numberUrlPart - 2] !== '') {
+					Maker::$app -> checkControllerActionName($explodeUrl[$numberUrlPart - 3]);
+			   		$widgetNameInUrl = $explodeUrl[$numberUrlPart - 3];
+				} else { //Если пустая
+					$explodeUrl = explode('/', Maker::$app -> userConfig['indexUrl']);
+					$numberUrlPart = count($explodeUrl);
+					Maker::$app -> checkControllerActionName($explodeUrl[$numberUrlPart - 2]);
+			   		$widgetNameInUrl = $explodeUrl[$numberUrlPart - 2];
+				}
+			}
+
+			//Если в имене контроллера нет "-"
+			if(strpos($widgetNameInUrl, '-') === false) {
+				//Делаем заглавной первую букву
+				$widgetName = $widgetNameInUrl;
+			} else { //если "-" есть
+				//Разделяем часть ссылки
+				$explodewidgetNameInUrl = explode('-', $widgetNameInUrl);
+				$widgetName = $explodewidgetNameInUrl[0];
+				$numberExplodewidgetNameInUrl = count($explodewidgetNameInUrl);
+				//Проходим все части имени контроллера
+				for($i = 1; $i < $numberExplodewidgetNameInUrl; $i++) {
+					//Делаем заглавной первую букву
+					$widgetName .= substr_replace($explodewidgetNameInUrl[$i], strtoupper(mb_substr($explodewidgetNameInUrl[$i], 0, 1)), 0, 1);
+				}
+			}
+
+			unset($url, $explodeUrl, $numberUrlPart, $widgetNameInUrl);
+
+			return $widgetName;
 		} else {
 			if($dataType !== 'string') {
 				Maker::$app -> error('В методе '.__METHOD__.' тип данных входного параметра не соответствует типу string');

@@ -6,41 +6,7 @@ use \lib\app\Maker;
 
 class FeedController
 {
-    //Метод сохранения фида в БД
-	public static function actionSave() {
-	 	if((isset($_POST['feedUrl'])) && ($_POST['feedUrl'] !== '')) {
-            //Фильтруем входные данные
-	 		$feedUrl = Maker::$app -> filter($_POST['feedUrl']);
-            //Проверяем является ли пришедшая строчка ссылкой
-            $checkResult = Maker::$app -> checkUrlFormat($feedUrl);
-            //Если пришедшая строка является ссылкой
-            if($checkResult === '1') {
-                $findResult = Maker::$app -> query('SELECT rss_url_list_id FROM rss_url_list WHERE rss_url = ?', [$feedUrl]);
-                //Если фида в БД нет
-	 			if($findResult === []) {
-                    //Разделяем ссылку на домен и путь
-	 				$devidedFeedUrl = Maker::$app -> devideUrl($feedUrl);
-                    //Кодируем путь, если в ней есть русские буквы
-	 				$encodingPuth = Maker::$app -> encodingPuth($devidedFeedUrl['path']);
-                    //Кодируем домен, имеющий русские буквы
-	 				$encodingDomain = Maker::$app -> encodingDomain($devidedFeedUrl['domain']);
-                    //Формируем рабочую ссылку с протоколом передачи, www
-	 				$fullLink = Maker::$app -> getFullLink($encodingDomain.$encodingPuth);
-                    //Сохраняем фид в БД
-	 				Maker::$app -> query('INSERT INTO rss_url_list VALUES (?, ?)', [null, $fullLink]);
-
-                    echo 'Фид сохранен';
-	 			} else {
-                    Maker::$app -> error('Указанные RSS фид уже находится в системе', 1);
-	 			}
-	 		} else {
-                Maker::$app -> error('Указанные данные не являются ссылкой', 1);
-	 		}
-	 	} else {
-            Maker::$app -> error('Не указана ссылка на RSS ленту', 1);
-	 	}
-	}
-
+    
     //Метод удаление фида
 	public static function actionDelete() {
         $dataType = gettype($_POST['feedId']);

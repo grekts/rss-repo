@@ -8,6 +8,7 @@ IndexIgnore */*
 RewriteEngine on
  
 # Если запрос не начинается с web, добавляем его
+RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_URI} !^/(web)
 RewriteRule (.*) /web/$1 [L]
  

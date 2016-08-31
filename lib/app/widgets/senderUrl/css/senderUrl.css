@@ -1,0 +1,36 @@
+.field-write-text {
+  position: absolute;
+  top: 12px;
+  right: 135px;
+  width: 200px;
+  height: 21px;
+  border: 1px solid #b1b1b1;
+  font-size: 15px;
+  color: #bcbcbc;
+  padding: 3px 5px 2px 5px;
+  background-color: #eeeeee; }
+  @media screen and (max-width: 760px) {
+    .field-write-text {
+      top: 25px;
+      left: 15px;
+      display: none; } }
+
+.button-send-data {
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  width: 100px;
+  height: 27px;
+  font-size: 12px;
+  border: 1px solid #b1b1b1;
+  background-color: #eeeeee; }
+  @media screen and (max-width: 760px) {
+    .button-send-data {
+      top: 25px;
+      left: 240px;
+      display: none; } }
+
+.cursor-pointer {
+  cursor: pointer; }
+
+/*# sourceMappingURL=senderUrl.css.map */

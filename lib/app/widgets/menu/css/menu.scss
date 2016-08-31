@@ -1,0 +1,24 @@
+.main-menu{
+	margin-top: 19px;
+
+	@media screen and (max-width: 760px) {
+		margin-top: 70px;
+		display: none;
+	}
+}
+
+.inline-block{
+	display: inline-block;
+	vertical-align: top;
+}
+
+.element-main-menu{
+	display: inline;
+	margin-right: 38px;
+}
+
+.menu-text{
+	font-size: 16px;
+	color: rgb(0, 136, 204);
+	text-decoration: none;
+}

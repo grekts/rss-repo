@@ -25,7 +25,7 @@ class SiteController
 			'link' => [
 				[
 					'rel' => 'stylesheet', 
-					'href' => '../../web/style/css/style.css'
+					'href' => 'web/style/css/style.css'
 				]
 			],
 			'script' => [
@@ -35,8 +35,19 @@ class SiteController
 				],
 				[
 					'type' => 'text/javascript',
-					'src' => 'js/index.js'
+					'src' => 'web/js/index.js'
 				]
+			]
+		]);
+
+		Maker::$app -> widgetRegistration([
+			'menu' => [
+				'content' => ['Список лент', 'Архив'],
+				'url' => ['feed-list', 'archive']
+			],
+			'senderUrl' => [
+				'startValue' => 'Ссылка',
+				'buttonName' => 'Добавить'
 			]
 		]);
 
@@ -63,7 +74,7 @@ class SiteController
 			'link' => [
 				[
 					'rel' => 'stylesheet', 
-					'href' => '../../web/style/css/style.css'
+					'href' => 'web/style/css/style.css'
 				]
 			],
 			'script' => [
@@ -73,8 +84,19 @@ class SiteController
 				],
 				[
 					'type' => 'text/javascript',
-					'src' => 'js/index.js'
+					'src' => 'web/js/index.js'
 				]
+			]
+		]);
+
+		Maker::$app -> widgetRegistration([
+			'menu' => [
+				'content' => ['Список лент', 'Архив'],
+				'url' => ['feed-list', 'archive']
+			],
+			'senderUrl' => [
+				'startValue' => 'Ссылка',
+				'buttonName' => 'Добавить'
 			]
 		]);
 
@@ -102,7 +124,7 @@ class SiteController
 			'link' => [
 				[
 					'rel' => 'stylesheet', 
-					'href' => '../../web/style/css/style.css'
+					'href' => 'web/style/css/style.css'
 				]
 			],
 			'script' => [
@@ -112,8 +134,19 @@ class SiteController
 				],
 				[
 					'type' => 'text/javascript',
-					'src' => 'js/index.js'
+					'src' => 'web/js/index.js'
 				]
+			]
+		]);
+
+		Maker::$app -> widgetRegistration([
+			'menu' => [
+				'content' => ['Список лент', 'Архив'],
+				'url' => ['feed-list', 'archive']
+			],
+			'senderUrl' => [
+				'startValue' => 'Ссылка',
+				'buttonName' => 'Добавить'
 			]
 		]);
 

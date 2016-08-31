@@ -2,9 +2,6 @@
 
 namespace lib\app;
 
-error_reporting(E_ALL | E_STRICT);
-ini_set('display_errors', 'On');
-
 class Maker
 {
 	public static $app;
@@ -189,6 +186,13 @@ class Maker
 	 	return $result;
 	}
 
+	public function getWidgetName($url = '') {
+		$object = $this -> newObject('Converter');
+	 	$result = $object -> getWidgetName($url);
+	 	$object = null;
+	 	return $result;
+	}
+
 	public function  getViewPuth($url = '', $viewName = '') {
 		$object = $this -> newObject('Converter');
 	 	$result = $object -> getViewPuth($url, $viewName);
@@ -246,8 +250,14 @@ class Maker
 	}
 
 	public function tagRegistration($tags = [])	{
-		$object = $this -> newObject('PageGenerator');
+		$object = $this -> newObject('Registrator');
 	 	$object -> tagRegistration($tags);
+	 	$object = null;
+	}
+
+	public function widgetRegistration($tags = [])	{
+		$object = $this -> newObject('Registrator');
+	 	$object -> widgetRegistration($tags);
 	 	$object = null;
 	}
 
@@ -260,8 +270,9 @@ class Maker
 
 	public function routingToView($viewName = '', $vars = []) {
 		$object = $this -> newObject('Router');
-		$object -> routingToView($viewName, $vars);
+		$result = $object -> routingToView($viewName, $vars);
 		$object = null;
+		return $result;
 	}
 
 	private function routingToAction() {

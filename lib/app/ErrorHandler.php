@@ -105,7 +105,7 @@ class ErrorHandler
 		} else { //Если дебаг выключен
 			//Если сообщение не содержит метки, что оно является системным (метка пользовательская или установленная разработчиком приложения)
 			if((mb_stripos(Maker::$app -> configData['userMessage'], $errorString) === false) && (mb_stripos('||0', $errorString) === false)) {
-				echo 'error|'.$errorString;
+				echo 'error1|'.$errorString;
 			} else {
 				echo 'error|Ошибка системы';
 			}

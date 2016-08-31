@@ -15,11 +15,19 @@ class Router {
 			//Получаем  из ссылки имя контроллера и вызываемого действия
 			$controllerName = Maker::$app -> getControllerName($url);
 			$actionName = Maker::$app -> getActionName($url);
-			if(file_exists(__DIR__.'/../../../controllers/'.$controllerName.'.php')) {
+			//Проверяем наличие пользовательского контроллера с запрошенным именем
+			if(file_exists(__DIR__.'/../../../controllers/'.$controllerName.'.php') === true) {
 				$contorllerPuth = '\controllers\\'.$controllerName;
 				$contorllerPuth::$actionName();
-			} else {
-				Maker::$app -> error('Файл контроллера '.$url.'|'.$controllerName.' не найден');
+			} else { //Если пользовательского контроллера с запрошенным именем нет
+				//Получаем имя предполгаемого виджета
+				$widgetName = Maker::$app -> getWidgetName($url);
+				if(file_exists(__DIR__.'/../widgets/'.$widgetName.'/controllers/'.$controllerName.'.php') === true) {
+					$contorllerPuth = '\lib\app\widgets\\'.$widgetName.'\controllers\\'.$controllerName;
+					$contorllerPuth::$actionName();
+				} else {
+					Maker::$app -> error('Файл контроллера '.$url.'|'.$controllerName.' не найден');
+				}
 			}
 		}
 	}
@@ -40,7 +48,10 @@ class Router {
 
 			//Формируем ссылку на запрашиваемый файл вида
 			$linkToView = Maker::$app -> getViewPuth($url, $viewName);
-			return require_once($linkToView);
+			ob_start();
+			require_once($linkToView);
+			$viewCode = ob_get_clean();
+			return $viewCode;
 		} else {
 			if($dataType1 !== 'string') {
 				Maker::$app -> error('В методе '.__METHOD__.' тип данных первого входного параметра не соответствует типу string');
