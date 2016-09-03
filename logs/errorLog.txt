@@ -1,0 +1,1 @@
+Номер ошибки: - Сообщение: В конфигурационном файле не указано свойство dbUserName параметра db Файл: F:\OpenServer\domains\datajob2.ru\vendor\app\modules\DbWorker.php Номер строки: 60 Дата: 03.09.2016 20:40

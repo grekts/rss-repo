@@ -1,0 +1,11 @@
+{
+	"require": {
+		"mso/idna-convert": "v1.1.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"liw\\": "",
+			"Mso\\IdnaConvert\\": "liw/app/vendor/mso/idna-convert/src"
+		}
+	}
+}

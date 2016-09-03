@@ -1,7 +1,3 @@
-<?php
-use \lib\app\Maker;
-?>
-
 <!DOCTYPE html>
 <?= $htmlTag ?>
 <head>

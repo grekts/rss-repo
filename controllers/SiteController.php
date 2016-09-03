@@ -1,13 +1,11 @@
 <?php
 
-namespace controllers;
-
-use \lib\app\Maker;
+namespace liw\controllers;
 
 class SiteController
 {
 	public static function actionIndex() {
-		Maker::$app -> tagRegistration([
+		\liw\vendor\app\Maker::$app -> tagRegistration([
 			'title' => 'Новости',
 			'meta' => [
 				[
@@ -40,7 +38,7 @@ class SiteController
 			]
 		]);
 
-		Maker::$app -> widgetRegistration([
+		\liw\vendor\app\Maker::$app -> widgetRegistration([
 			'menu' => [
 				'content' => ['Список лент', 'Архив'],
 				'url' => ['feed-list', 'archive']
@@ -51,12 +49,12 @@ class SiteController
 			]
 		]);
 
-		$newsList = Maker::$app -> query('SELECT news.news_id, news.news_title, news.news_description, news.news_link, news.publication_date FROM news WHERE news.read = ?', [0]);
-		Maker::$app -> render('index', ['newsList' => $newsList]);
+		$newsList = \liw\vendor\app\Maker::$app -> query('SELECT news.news_id, news.news_title, news.news_description, news.news_link, news.publication_date FROM news WHERE news.read = ?', [0]);
+		\liw\vendor\app\Maker::$app -> render('index', ['newsList' => $newsList]);
 	}
 
 	public static function actionArchive() {
-		Maker::$app -> tagRegistration([
+		\liw\vendor\app\Maker::$app -> tagRegistration([
 			'title' => 'Архив новостей',
 			'meta' => [
 				[
@@ -89,7 +87,7 @@ class SiteController
 			]
 		]);
 
-		Maker::$app -> widgetRegistration([
+		\liw\vendor\app\Maker::$app -> widgetRegistration([
 			'menu' => [
 				'content' => ['Список лент', 'Архив'],
 				'url' => ['feed-list', 'archive']
@@ -100,13 +98,13 @@ class SiteController
 			]
 		]);
 
-		$newsList = Maker::$app -> query('SELECT news_archive.news_title, news_archive.news_description, news_archive.news_link, news_archive.publication_date, news_archive.news_archive_id
+		$newsList = \liw\vendor\app\Maker::$app -> query('SELECT news_archive.news_title, news_archive.news_description, news_archive.news_link, news_archive.publication_date, news_archive.news_archive_id
       FROM news_archive', []);
-		Maker::$app -> render('archive', ['newsList' => $newsList]);
+		\liw\vendor\app\Maker::$app -> render('archive', ['newsList' => $newsList]);
 	}
 
 	public static function actionFeedList() {
-		Maker::$app -> tagRegistration([
+		\liw\vendor\app\Maker::$app -> tagRegistration([
 			'title' => 'RSS ленты',
 			'meta' => [
 				[
@@ -139,7 +137,7 @@ class SiteController
 			]
 		]);
 
-		Maker::$app -> widgetRegistration([
+		\liw\vendor\app\Maker::$app -> widgetRegistration([
 			'menu' => [
 				'content' => ['Список лент', 'Архив'],
 				'url' => ['feed-list', 'archive']
@@ -150,7 +148,7 @@ class SiteController
 			]
 		]);
 
-		$feedsList = Maker::$app -> query('SELECT rss_url_list.rss_url, rss_url_list.rss_url_list_id FROM rss_url_list', []);
-		Maker::$app -> render('feed-list', ['feedsList' => $feedsList]);
+		$feedsList = \liw\vendor\app\Maker::$app -> query('SELECT rss_url_list.rss_url, rss_url_list.rss_url_list_id FROM rss_url_list', []);
+		\liw\vendor\app\Maker::$app -> render('feed-list', ['feedsList' => $feedsList]);
 	}
 }

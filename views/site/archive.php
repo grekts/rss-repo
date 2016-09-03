@@ -1,6 +1,3 @@
-<?php
-use \lib\app\Maker;
-?>
 
 		<div class="main">
 			<div class="row marg-center">
@@ -26,7 +23,7 @@ use \lib\app\Maker;
 			<div class="row marg-center bord-bottom not-display cursor-pointer" id="description-<?= $oneNews['news_archive_id'] ?>">
 				<div class="cols-12 cols-6 inline-block">
 					<?php 
-						$paragraphSeparator = Maker::$app -> configData['separator'];
+						$paragraphSeparator = \liw\vendor\app\Maker::$app -> configData['separator'];
 						$paragraphs = explode('|!|', $oneNews['news_description']); 
 						foreach ($paragraphs as $oneParagraph):
 					?>
