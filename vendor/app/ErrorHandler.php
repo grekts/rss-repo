@@ -2,9 +2,27 @@
 
 namespace liw\vendor\app;
 
+/**
+ * Класс обработки ошибок
+ * 
+ * Класс предоставляет следующий функционал:
+ * - получение информации об ошибке
+ * - вывод ошибки и отправка е в лог
+ * - определение обработчика ошибок
+ * - определение необходимости выводить сообщения об ошибках на страницу
+ * 
+ * @author Roman Tsutskov
+ */
 class ErrorHandler
 {
-	//Метод формирования сообщения об ошибке
+	/**
+	 * Метод формирования сообщения об ошибке
+	 * 
+	 * @param string $message Сообщение ошибки
+	 * @param string $file Ссылка на файл, в котором произошла ошибка
+	 * @param integer $line Номер строки, на которой произошла ошибка
+	 * @param integer $flagUserMessage Флаг, определяющий нужно ли показывать пользователю данное сообщение об ошибке
+	 */
 	public function error($message, $file, $line, $flagUserMessage) {
 		$dataType1 = gettype($message);
 		$dataType2 = gettype($flagUserMessage);
@@ -44,7 +62,11 @@ class ErrorHandler
 		}
 	}
 
-	//Метод установки показывать ошибки или нет (зависит от настроек)
+	/**
+	 * Метод установки показывать ошибки или нет (зависит от настроек)
+	 * 
+	 * @param string $flagWorkDebug Флаг из конфигурационного файла, указывающий запущен режим дебага или нет
+	 */
 	public function determineShowErrors($flagWorkDebug) {
 		$dataType = gettype($flagWorkDebug);
 		if(($dataType === 'string') && ($flagWorkDebug !== '')) {
@@ -60,7 +82,9 @@ class ErrorHandler
 		}
 	}
 
-	//Регистрация обработчиков ошибок
+	/**
+	 * Метод регистрации обработчиков ошибок
+	 */
 	public function registerErrorHandler() {
 		error_reporting(E_ALL | E_STRICT);
 		ini_set('display_errors', 'Off');
@@ -69,13 +93,22 @@ class ErrorHandler
 		set_exception_handler([$this, 'processingExceptionError']);
 	}
 
-	//Обработка ьпользовательских ошибок
+	/**
+	 * Обработка ьпользовательских ошибок
+	 * 
+	 * @param integer $errorNumber Номер ошибки
+	 * @param string $errorString Сообщение ошибки
+	 * @param string $errorFile Ссылка на файл, в котором произошла ошибка
+	 * @param integer $errorLine Номер строки, на которой произошла ошибка
+	 */
 	public function processingError($errorNumber, $errorString, $errorFile, $errorLine) {
 		$this -> showError($errorNumber, $errorString, $errorFile, $errorLine);
 		exit();
 	}
 
-	//Обраьотка фатальных ошибок
+	/**
+	 * Обраьотка фатальных ошибок
+	 */
 	public function processingFatalError() {
 		$errorData = error_get_last();
 		if($errorData !== null) {
@@ -85,12 +118,24 @@ class ErrorHandler
 		exit();
 	}
 
-	//Обработка исключений
+	/**
+	 * Обработка исключений
+	 * 
+	 * @param object $e Экземпляр объекта исключения
+	 */
 	public function processingExceptionError(\Exception $e) {
 		$this -> showError(get_class($e), $e -> getMessage(), $e -> getFile(), $e -> getLine());
 		exit();
 	}
 
+	/**
+	 * Метод вывода ошибки на экран и записи в лог
+	 * 
+	 * @param integer $errorNumberOrType Номер ошибки или ее тип
+	 * @param string $errorString Сообщение ошибки
+	 * @param string $errorFile Ссылка на файл, в котором произошла ошибка
+	 * @param integer $errorLine Номер строки, на которой произошла ошибка
+	 */
 	private function showError($errorNumberOrType, $errorString, $errorFile, $errorLine) {
 		$errorMessage = 'Номер ошибки: '.$errorNumberOrType.' Сообщение: '.$errorString.' Файл: '.$errorFile.' Номер строки: '.$errorLine.' Дата: '.date('d.m.Y H:i');
 		$logFile = fopen(__DIR__."/../../logs/errorLog.txt", "a");

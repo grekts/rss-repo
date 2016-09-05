@@ -16,7 +16,6 @@
 			    <div class="cols-5 cols-6 pos-relative inline-block">
 			    	<?=  $senderUrl; ?> 
 			    </div>
-			    <div class="main-menu-button not-display cursor-pointer">≡</div>
 			</div>
 		</header>
 		<?= $content ?>

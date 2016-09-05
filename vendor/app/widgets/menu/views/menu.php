@@ -1,4 +1,4 @@
-<ul class="main-menu inline-block">
+<ul class="main-menu">
 	<?php $numberMenuElements = count($content);
 	for($i = 0; $i < $numberMenuElements; $i++): ?>
 					<li class="element-main-menu">
@@ -6,3 +6,4 @@
 						</li>
 	<?php endfor; ?>
 				</ul>
+				<div class="main-menu-button not-display cursor-pointer">≡</div>

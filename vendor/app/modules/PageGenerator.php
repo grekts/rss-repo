@@ -2,9 +2,23 @@
 
 namespace liw\vendor\app\modules;
 
+/**
+ * Класс генерации кодов страниц
+ * Класс предоставляет следующий функционал:
+ * - рендеринг страницы с помощью запуска процессов полкченяи кодов тегов, виджетов, шаблонов и видов
+ * - формирование кодов html тегов, находящизхся между <head>, тега <script> и <html>
+ * - формирование html кодов подключаемых виджетов
+ * 
+ * @author Roman Tsutskov
+ */
 class PageGenerator
 {
-	//Метд рендеринга
+	/**
+	 * Метод рендера страницы сайта
+	 * 
+	 * @param string $viewName Имя запрашиваемого файла вида
+	 * @param array $vars Данные, полученные из базы данных для вывода на странице
+	 */
 	public function render($viewName, $vars) {
 		$dataType1 = gettype($viewName);
 		$dataType2 = gettype($vars);
@@ -48,7 +62,12 @@ class PageGenerator
 		}
 	}
 
-	//Метод формирование тегов в head
+	/**
+	 * Формирует html теги для вывода на страницу. Применяется как для зарегистрированных  тегов, так и для тегов, связанных с виджетами.
+	 * 
+	 * @param array $widgetsNames Имена подключенных виджетов
+	 * @return array Именованный массив с html кодами тегов
+	 */
 	public function formingTags($widgetsNames = '') {
 		ob_start();
 		$headTagsCode = '';
@@ -160,7 +179,11 @@ class PageGenerator
 		}
 	}
 
-	//Метод формирование тегов в head
+	/**
+	 * Формирует html код подключенных виджетов.
+	 * 
+	 * @return array Именованный массив с html кодами подключаемых виджетов
+	 */
 	public function formingWidgets() {
 		$widgetsCode = [];
 		//Если были зарегистрированы виджеты

@@ -2,9 +2,19 @@
 
 namespace liw\controllers;
 
+/**
+ * Контроллер управления новостями, полученными из фидов.
+ * Контроллер предоставляет функциональность для удаления прочитанных новостей, 
+ * определения, что новость прчитана, отправик новостей в архив,
+ * удаления новостей из архива.
+ * 
+ * @author Roman Tsutskov
+ */
 class NewsController
 {
-	//Метод устанавливает что новость прочитана
+	/**
+	 * Метод устанавливает что новость прочитана
+	 */
 	public static function actionSetRead() {
 		$dataType = gettype($_POST['newsId']);
 		if((isset($_POST['newsId'])) && ($_POST['newsId'] !== '') && ($dataType === 'string')) {
@@ -20,12 +30,16 @@ class NewsController
 		}
 	}
 
-	//Метод удаления прочитанных новостей
+	/**
+	 * Метод удаления прочитанных новостей
+	 */
 	public static function actionDelete() {
 		\liw\vendor\app\Maker::$app -> query('DELETE FROM news WHERE news.read = ?', [1]);
 	}
 
-	//Метод переноса новости в архив
+	/**
+	 * Метод переноса новости в архив
+	 */
 	public static function actionSendToArchive() {
 		$dataType = gettype($_POST['newsId']);
 		if((isset($_POST['newsId'])) && ($_POST['newsId'] !== '') && ($dataType === 'string')) {
@@ -45,7 +59,9 @@ class NewsController
 		}
 	}
 
-	//Метод удаления новости из архива
+	/**
+	 * Метод удаления новости из архива
+	 */
 	public static function actionDeleteFromArchive() {
 		$dataType = gettype($_POST['newsId']);
 		if((isset($_POST['newsId'])) && ($_POST['newsId'] !== '') && ($dataType === 'string')) {

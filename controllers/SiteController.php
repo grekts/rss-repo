@@ -1,9 +1,19 @@
 <?php
 
+
 namespace liw\controllers;
 
+/**
+ * Контроллер формирования страниц сайта.
+ * Контроллер предоставляет функциональность для формирования различных страниц сайта.
+ * 
+ * @author Roman Tsutskov
+ */
 class SiteController
 {
+	/**
+	 * Метод формирования главной страницы сайта
+	 */
 	public static function actionIndex() {
 		\liw\vendor\app\Maker::$app -> tagRegistration([
 			'title' => 'Новости',
@@ -49,10 +59,21 @@ class SiteController
 			]
 		]);
 
-		$newsList = \liw\vendor\app\Maker::$app -> query('SELECT news.news_id, news.news_title, news.news_description, news.news_link, news.publication_date FROM news WHERE news.read = ?', [0]);
+		$newsList = \liw\vendor\app\Maker::$app -> query('SELECT news.news_id, 
+			news.news_title, 
+			news.news_description, 
+			news.news_link, 
+			news.publication_date 
+			FROM news 
+			WHERE news.read = ?', 
+			[0]
+		);
 		\liw\vendor\app\Maker::$app -> render('index', ['newsList' => $newsList]);
 	}
 
+	/**
+	 * Метод формирования страницы для вывода архива новостей
+	 */
 	public static function actionArchive() {
 		\liw\vendor\app\Maker::$app -> tagRegistration([
 			'title' => 'Архив новостей',
@@ -98,11 +119,20 @@ class SiteController
 			]
 		]);
 
-		$newsList = \liw\vendor\app\Maker::$app -> query('SELECT news_archive.news_title, news_archive.news_description, news_archive.news_link, news_archive.publication_date, news_archive.news_archive_id
-      FROM news_archive', []);
+		$newsList = \liw\vendor\app\Maker::$app -> query('SELECT news_archive.news_title, 
+			news_archive.news_description, 
+			news_archive.news_link, 
+			news_archive.publication_date, 
+			news_archive.news_archive_id
+     		FROM news_archive', 
+     		[]
+     	);
 		\liw\vendor\app\Maker::$app -> render('archive', ['newsList' => $newsList]);
 	}
 
+	/**
+	 * Метод формирования станицы для вывода списка фидов
+	 */
 	public static function actionFeedList() {
 		\liw\vendor\app\Maker::$app -> tagRegistration([
 			'title' => 'RSS ленты',
@@ -148,7 +178,11 @@ class SiteController
 			]
 		]);
 
-		$feedsList = \liw\vendor\app\Maker::$app -> query('SELECT rss_url_list.rss_url, rss_url_list.rss_url_list_id FROM rss_url_list', []);
+		$feedsList = \liw\vendor\app\Maker::$app -> query('SELECT rss_url_list.rss_url, 
+			rss_url_list.rss_url_list_id 
+			FROM rss_url_list', 
+			[]
+		);
 		\liw\vendor\app\Maker::$app -> render('feed-list', ['feedsList' => $feedsList]);
 	}
 }

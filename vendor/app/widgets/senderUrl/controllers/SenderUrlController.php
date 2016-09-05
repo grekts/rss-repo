@@ -2,9 +2,19 @@
 
 namespace liw\vendor\app\widgets\senderUrl\controllers;
 
+/**
+ * Контроллер отправки ссылок в базу данных
+ * Контроллер отвечает за работу виджета отправки ссылки в базу данных
+ * 
+ * @author Roman Tsutskov
+ */
 class SenderUrlController
 {
-	//Метод сохранения ссылки
+	/**
+	 * Метод сохранения ссылки
+	 * 
+	 * @return string Сообщение о том, что ссылка сохранена
+	 */
 	public static function actionSaveUrl() {
 	 	if((isset($_POST['data'])) && ($_POST['data'] !== '') && (gettype($_POST['data']) === 'string')) {
             //Фильтруем входные данные

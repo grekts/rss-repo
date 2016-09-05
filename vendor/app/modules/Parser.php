@@ -2,9 +2,20 @@
 
 namespace liw\vendor\app\modules;
 
+/**
+ * Класс парсинга кдов страниц
+ * Класс предоставляет фукнционалд для парсинга кода RSS фидов
+ * 
+ * @author Roman Tsutskov
+ */
 class Parser
 {
-	//Метод парсинга RSS фида
+	/**
+	 * Метод парсинга RSS фида
+	 * 
+	 * @param string $url Ссылка на фид, подлежащий парсингу
+	 * @return array Именованный массив с частями кода rss фида
+	 */
 	public function parseRss($url) {
 		$dataType = gettype($url);
 		if(($dataType === 'string') && ($url !== '')) {

@@ -2,10 +2,20 @@
 
 namespace liw\controllers;
 
+/**
+ * Контроллер управления RSS фидами.
+ * Контроллер предоставляет функциональность для удаления RSS фидов из базы данных сервиса,
+ * а так же для парсинга фидов, сохраненных в сервисе.
+ * 
+ * @author Roman Tsutskov
+ */
 class FeedController
 {
-    
-    //Метод удаление фида
+    /**
+     * Метод удаления фида из базы данных
+     * 
+     * @return string Сообщение о том, что фид удален
+    */
 	public static function actionDelete() {
         $dataType = gettype($_POST['feedId']);
         if((isset($_POST['feedId'])) && ($_POST['feedId'] !== '') && ($dataType === 'string')) {
@@ -25,7 +35,9 @@ class FeedController
         }
     }
 
-    //Метод парсинга фида
+    /**
+     * Метод париснга фидов и сохранения новостей в базе данных
+    */
     public static function actionParse() {
         //Получаем список фидов
         $feedList = \liw\vendor\app\Maker::$app -> query('SELECT rss_url_list.rss_url, rss_url_list.rss_url_list_id FROM rss_url_list', []);
